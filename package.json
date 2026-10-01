@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "a11y": "node tools/a11y.mjs",
-    "images": "node tools/prepare-images.mjs"
+    "images": "node tools/prepare-images.mjs",
+    "map": "node tools/make-map.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bodoni-moda": "^5.3.0",

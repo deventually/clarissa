@@ -19,7 +19,7 @@ const fullTitle = page === 'home' ? `${salon.name} | Pedicure en manicure in Den
 const canonical = new URL(Astro.url.pathname, salon.url).href;
 
 const tabs = [
-  { href: '/', label: 'Thuis', icon: 'home', page: 'home' },
+  { href: '/', label: 'Home', icon: 'home', page: 'home' },
   { href: '/pedicure', label: 'Pedicure', icon: 'foot', page: 'pedicure' },
   { href: '/manicure', label: 'Manicure', icon: 'polish', page: 'manicure' },
   { href: '/contact', label: 'Contact', icon: 'pin', page: 'contact' },
@@ -71,7 +71,7 @@ const jsonLd = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="nl_NL" />
     <script is:inline>
-      // De lakglans strijkt één keer per bezoek over de hero, niet bij elke terugkeer naar Thuis.
+      // De lakglans strijkt één keer per bezoek over de hero, niet bij elke terugkeer naar Home.
       try {
         if (sessionStorage.getItem('glans')) document.documentElement.classList.add('no-sheen');
         sessionStorage.setItem('glans', '1');
@@ -106,13 +106,13 @@ const jsonLd = {
               {salon.postcode} {salon.city}<br />
               <a href={salon.phoneHref}>{salon.phoneDisplay}</a>
             </address>
-            <p><a href={salon.mapsHref} rel="noopener">Route plannen</a></p>
+            <p><a href="/contact#route">Route plannen</a></p>
             <p><a href="/contact#openingstijden">Openingstijden</a></p>
           </div>
           <nav aria-labelledby="f-paginas">
             <h2 class="footer-title" id="f-paginas">Alle pagina's</h2>
             <ul>
-              <li><a href="/">Thuis</a></li>
+              <li><a href="/">Home</a></li>
               {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
               <li><a href="/certificering">ProVoet-certificering</a></li>
             </ul>

@@ -1,63 +1,369 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import BookBlock from '../components/BookBlock.astro';
+import CallActions from '../components/CallActions.astro';
 import Hours from '../components/Hours.astro';
+import Icon from '../components/Icon.astro';
+import { Image } from 'astro:assets';
 import { salon } from '../data/salon';
 import tip from '../assets/wachtkamer-tip.jpg';
+import kaart from '../assets/kaart.jpg';
 ---
 
 <Base
   page="contact"
   title="Contact"
-  description="Clarissa Body & Style, Goudenregenplein 59, Den Haag. Open dinsdag tot en met zaterdag. Met tram 12 of RandstadRail 3, en gratis parkeren tot 18:00."
+  description="Clarissa Body & Style, Goudenregenplein 59, Den Haag. Open dinsdag tot en met zaterdag. Plan je route met Google Maps of Apple Maps; tram 12 en RandstadRail 3 stoppen vlakbij, en parkeren is tot 18:00 gratis."
 >
   <PageHead
     title="Contact"
-    lead={`${salon.street}, ${salon.postcode} ${salon.city}.`}
+    lead={`${salon.street} in ${salon.city}. Bel of app voor een afspraak, of plan hieronder je route.`}
     image={tip}
     alt="Een rieten stoel met kussen in de wachtkamer."
   >
-    <p class="maps"><a href={salon.mapsHref} rel="noopener">Route plannen in Google Maps</a></p>
+    <div class="head-actions" id="afspraak">
+      <CallActions />
+      <p class="note">{salon.cancellation}</p>
+    </div>
   </PageHead>
 
-  <BookBlock />
+  <section class="section op-licht" id="route" aria-labelledby="route-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Zo vind je de salon</p>
+          <h2 id="route-title">Route plannen</h2>
+        </div>
+        <p>{salon.street}, {salon.postcode} {salon.city}. Aan het plein, bij de tramhalte.</p>
+      </div>
 
-  <section class="section" aria-labelledby="openingstijden">
-    <div class="wrap contact-grid">
+      <div class="route">
+        <div class="route__kaart">
+          <a class="kaart" href={salon.mapsHref} rel="noopener">
+            <Image src={kaart} alt="Kaart van de buurt rond het Goudenregenplein, met de salon in het midden. Opent Google Maps." width={1600} height={1000} loading="lazy" />
+            <span class="kaart__puls" aria-hidden="true"></span>
+            <span class="kaart__speld" aria-hidden="true"></span>
+            <span class="kaart__label" aria-hidden="true">
+              <strong>Clarissa Body &amp; Style</strong>
+              {salon.street}
+            </span>
+            <span class="kaart__open" aria-hidden="true">Open in Google Maps <Icon name="arrow-out" /></span>
+          </a>
+          <p class="kaart__bron">
+            Kaart: © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap-bijdragers</a>
+          </p>
+        </div>
+
+        <div class="route__info">
+          <div class="actions route__knoppen">
+            <a class="button button--primary" href={salon.routeGoogle} rel="noopener">
+              <span class="button__icon"><Icon name="navigate" /></span>
+              <span class="button__label">Google Maps<span class="button__sub">Route plannen</span></span>
+            </a>
+            <a class="button button--light" href={salon.routeApple} rel="noopener">
+              <span class="button__icon"><Icon name="navigate" /></span>
+              <span class="button__label">Apple Maps<span class="button__sub">Route plannen</span></span>
+            </a>
+          </div>
+          <p class="route__hint">De route opent in de kaarten-app op je telefoon, vanaf de plek waar je nu bent.</p>
+
+          <ul class="vervoer" role="list">
+            <li>
+              <span class="vervoer__icoon"><Icon name="tram" /></span>
+              <div>
+                <h3>Tram 12</h3>
+                <p>Halte Goudenregenplein, voor de deur.</p>
+              </div>
+            </li>
+            <li>
+              <span class="vervoer__icoon"><Icon name="tram" /></span>
+              <div>
+                <h3>RandstadRail 3</h3>
+                <p>Halte Goudenregenstraat, een paar minuten lopen.</p>
+              </div>
+            </li>
+            <li>
+              <span class="vervoer__icoon"><Icon name="car" /></span>
+              <div>
+                <h3>Met de auto</h3>
+                <p>Parkeren is tot 18:00 gratis op het plein en in de buurt.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blos" aria-labelledby="openingstijden">
+    <div class="wrap uren">
       <div>
+        <p class="eyebrow">Langskomen</p>
         <h2 id="openingstijden">Openingstijden</h2>
-        <div class="card"><Hours /></div>
+        <p class="uren__sub">Dinsdag tot en met zaterdag. Op maandag en zondag is de salon dicht.</p>
       </div>
-      <div class="prose">
-        <h2 id="bereikbaarheid">Bereikbaarheid</h2>
-        <h3>Met het openbaar vervoer</h3>
-        <p>Tram 12 stopt bij halte Goudenregenplein, RandstadRail 3 bij halte Goudenregenstraat.</p>
-        <h3>Met de auto</h3>
-        <p>Parkeren is tot 18:00 gratis op het Goudenregenplein en in de omgeving.</p>
-      </div>
+      <div class="card"><Hours /></div>
     </div>
   </section>
 </Base>
 
 <style>
-  .maps {
-    margin-top: 0.75rem;
+  .head-actions {
+    margin-top: 1.5rem;
   }
-  .contact-grid {
+  .head-actions .note {
+    margin-top: 1rem;
+  }
+
+  .route {
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
   }
-  .contact-grid h2 {
-    margin-bottom: 1.25rem;
+
+  /* de kaart: op ware grootte uitgesneden rond de salon, met een gelakte speld in het midden */
+  .kaart {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    height: clamp(20rem, 70vw, 30rem);
+    border-radius: var(--r-l);
+    color: var(--inkt);
+    text-decoration: none;
+    background: #faf0f5;
+    box-shadow:
+      0 0 0 0.55rem #fff,
+      0 0 0 calc(0.55rem + 1px) var(--lijn),
+      0 40px 70px -36px rgb(120 20 80 / 0.55);
+    margin: 0.55rem;
   }
-  .prose h3:first-of-type {
-    margin-top: 0;
+  .kaart :global(img) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1600px;
+    max-width: none;
+    height: 1000px;
+    transform: translate(-50%, -50%);
+    transition: transform 600ms var(--ease);
+  }
+  .kaart:hover :global(img) {
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+  /* zachte rand van licht, zoals de andere gelakte vlakken */
+  .kaart::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      radial-gradient(closest-side, transparent 60%, rgb(61 18 56 / 0.12)),
+      linear-gradient(104deg, transparent 25%, rgb(255 255 255 / 0.25) 32%, transparent 42%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.6);
+  }
+  .kaart__speld {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    /* de punt van de druppel valt precies op het adres */
+    margin: calc(-1.375rem - 1.945rem) 0 0 -1.375rem;
+    border-radius: 50% 50% 50% 0;
+    background: var(--lak-glans), var(--lak-fuchsia);
+    box-shadow:
+      var(--lak-rand),
+      -4px 10px 16px -6px rgb(120 20 80 / 0.6);
+    transform: rotate(-45deg);
+  }
+  .kaart__speld::after {
+    content: '';
+    position: absolute;
+    inset: 32%;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.2);
+  }
+  .kaart__puls {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    width: 1.25rem;
+    height: 0.6rem;
+    margin: -0.3rem 0 0 -0.625rem;
+    border-radius: 50%;
+    background: rgb(142 12 80 / 0.35);
+  }
+  .kaart__puls::after {
+    content: '';
+    position: absolute;
+    inset: -1rem -1.5rem;
+    border-radius: 50%;
+    border: 2px solid rgb(201 38 122 / 0.55);
+    animation: puls 2400ms var(--ease) infinite;
+  }
+  @keyframes puls {
+    from {
+      transform: scale(0.3);
+      opacity: 1;
+    }
+    to {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+  /* op mobiel boven de speld, op groter scherm ernaast */
+  .kaart__label {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: calc(50% + 4rem);
+    transform: translateX(-50%);
+    display: grid;
+    width: max-content;
+    max-width: 13rem;
+    text-align: center;
+    padding: 0.6rem 0.9rem;
+    font-size: var(--t-s);
+    line-height: 1.35;
+    color: var(--inkt-zacht);
+    border-radius: var(--r-s);
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 0 0 1px #fff,
+      0 12px 28px -14px rgb(90 20 70 / 0.55);
+  }
+  .kaart__label strong {
+    font-weight: 600;
+    color: var(--inkt);
+  }
+  .kaart__open {
+    position: absolute;
+    z-index: 3;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.95rem;
+    font-size: var(--t-s);
+    font-weight: 500;
+    color: var(--op-lak);
+    border-radius: 999px;
+    background: var(--glas-donker);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 0 0 1px var(--glas-rand),
+      0 10px 22px -12px rgb(18 5 15 / 0.6);
+  }
+  .kaart__open :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+  .kaart:hover .kaart__open {
+    background: var(--lak-glans), var(--lak-fuchsia);
+  }
+  .kaart:focus-visible {
+    outline-offset: 0.9rem;
+  }
+  .kaart__bron {
+    margin: 0.9rem 0.55rem 0;
+    font-size: 0.8125rem;
+    color: var(--inkt-zacht);
+  }
+
+  .route__hint {
+    margin-top: 0.85rem;
+    font-size: var(--t-s);
+    color: var(--inkt-zacht);
+  }
+
+  .vervoer {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+  .vervoer li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    border-radius: var(--r-l);
+    background: rgb(255 255 255 / 0.72);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.9),
+      0 1px 2px rgb(90 20 70 / 0.06),
+      0 18px 36px -26px rgb(90 20 70 / 0.35);
+  }
+  .vervoer__icoon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    color: var(--fuchsia-tekst);
+    background: rgb(201 38 122 / 0.1);
+    box-shadow: inset 0 0 0 1px rgb(201 38 122 / 0.14);
+  }
+  .vervoer__icoon :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+  .vervoer h3 {
+    font-size: var(--t-m);
+    font-weight: 600;
+  }
+  .vervoer p {
+    color: var(--inkt-zacht);
+    font-size: var(--t-s);
+    margin-top: 0.1rem;
+  }
+
+  .uren {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .uren h2 {
+    margin-bottom: 0.75rem;
+  }
+  .uren__sub {
+    color: var(--inkt-zacht);
+    max-width: 26rem;
+  }
+
+  @media (min-width: 40rem) {
+    .kaart__label {
+      left: calc(50% + 1.75rem);
+      bottom: calc(50% + 1.5rem);
+      transform: none;
+      text-align: left;
+    }
+    .route__knoppen {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   @media (min-width: 64rem) {
-    .contact-grid {
+    .route {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 4rem;
+      align-items: start;
+    }
+    .route__knoppen {
+      grid-template-columns: 1fr;
+    }
+    .uren {
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
+      align-items: start;
     }
   }
 </style>

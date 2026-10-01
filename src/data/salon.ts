@@ -10,9 +10,19 @@ export const salon = {
   whatsappHref:
     'https://wa.me/31657666797?text=' +
     encodeURIComponent('Hallo Clarissa, ik wil graag een afspraak maken voor '),
+  /** de salon zelf in Google Maps (staat daar als bedrijf) */
   mapsHref:
     'https://www.google.com/maps/search/?api=1&query=' +
-    encodeURIComponent('Goudenregenplein 59, 2565 GK Den Haag'),
+    encodeURIComponent('Clarissa Body & Style, Goudenregenplein 59, 2565 GK Den Haag'),
+  /** route vanaf waar je nu bent */
+  routeGoogle:
+    'https://www.google.com/maps/dir/?api=1&destination=' +
+    encodeURIComponent('Clarissa Body & Style, Goudenregenplein 59, 2565 GK Den Haag'),
+  routeApple:
+    'https://maps.apple.com/?daddr=' +
+    encodeURIComponent('Goudenregenplein 59, 2565 GK Den Haag') +
+    '&q=' +
+    encodeURIComponent('Clarissa Body & Style'),
   url: 'https://clarissa-bodyandstyle.nl',
   cancellation:
     'Kun je niet komen? Bel dan uiterlijk 24 uur van tevoren af. Anders moeten we de hele behandeling in rekening brengen.',

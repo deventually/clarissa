@@ -62,6 +62,11 @@
     linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 0.045) 46%, transparent 54%),
     linear-gradient(165deg, var(--lak-700) 0%, var(--lak-900) 55%, var(--lak-950) 100%);
   --glas-donker: rgb(28 8 25 / 0.94);
+
+  /* fuchsia lak: de Bel-knop, de actieve tab, het label 'vandaag' en de speld op de kaart */
+  --lak-fuchsia: linear-gradient(180deg, #c93582 0%, #b3216d 100%);
+  --lak-glans: linear-gradient(180deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0) 50%);
+  --lak-rand: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.1);
   --glas-rand: rgb(255 255 255 / 0.14);
 }
 
@@ -100,22 +105,24 @@ svg {
   max-width: 100%;
 }
 
+/* Bodoni op kopformaat: een vaste, lage optische grootte geeft stevigere haarlijnen dan 'auto'
+   (dat bij grote letters naar de dunste snit schuift), en 600 maakt de dikte eenduidig. */
 h1,
 h2 {
   font-family: var(--display);
-  font-weight: 500;
-  font-optical-sizing: auto;
-  line-height: 1.04;
+  font-weight: 600;
+  font-variation-settings: 'opsz' var(--opsz, 28);
+  line-height: 1.06;
   margin: 0;
   text-wrap: balance;
 }
 h1 {
   font-size: var(--t-h1);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 h2 {
   font-size: var(--t-h2);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
 h3 {
   font-family: var(--text);
@@ -196,14 +203,19 @@ main:focus {
   outline-color: var(--roze);
 }
 
-/* glanzende koppen op lak: parelmoer */
+/* glanzende koppen op lak: parelmoer.
+   Tekst met background-clip wordt afgesneden aan de rand van het blok; de staarten van g, j en p
+   steken daar onder de laatste regel uit. Extra ruimte onderin (en evenveel terug via de marge)
+   houdt ze heel zonder de opmaak te verschuiven. */
 .lak h1,
 .lak h2 {
   color: var(--op-lak);
-  background: linear-gradient(100deg, #fff6fa 0%, #f9cde1 38%, #fff6fa 62%, #f3c4dc 100%);
+  background: linear-gradient(100deg, #fff8fb 0%, #fbdbe9 40%, #fff8fb 64%, #f7d3e4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-block: 0.08em 0.2em;
+  margin-block: -0.08em -0.2em;
 }
 @media (forced-colors: active) {
   .lak h1,
@@ -240,6 +252,7 @@ main:focus {
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 600;
+  font-variation-settings: 'opsz' 18;
   line-height: 1.05;
   letter-spacing: -0.005em;
   color: var(--op-lak);
@@ -346,17 +359,17 @@ main:focus {
 .tab[aria-current='page'] {
   color: var(--op-lak);
 }
-/* het actieve tabje: een gelakte fuchsia kraal */
+/* het actieve tabje: dezelfde fuchsia lak als de Bel-knop */
 .tab[aria-current='page'] .tab__icon::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   view-transition-name: tab-kraal;
-  background:
-    radial-gradient(60% 50% at 40% 22%, rgb(255 255 255 / 0.45), transparent 70%),
-    linear-gradient(180deg, #d63a86, var(--fuchsia) 55%, var(--fuchsia-diep));
-  box-shadow: inset 0 -2px 4px rgb(0 0 0 / 0.25), 0 4px 14px rgb(201 38 122 / 0.55);
+  background: var(--lak-glans), var(--lak-fuchsia);
+  box-shadow:
+    var(--lak-rand),
+    0 6px 14px -8px rgb(0 0 0 / 0.7);
 }
 .tab:active .tab__icon {
   transform: scale(0.92);
@@ -389,9 +402,37 @@ main {
   gap: 0.5rem 2rem;
   margin-bottom: 1.75rem;
 }
-.section-head p {
+.section-head > p {
   color: var(--inkt-zacht);
   max-width: 28rem;
+}
+
+/* bovenregel boven een kop: klein, gespatieerd, met een lakstreepje */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fuchsia-tekst);
+}
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--fuchsia), var(--orchidee));
+}
+.lak .eyebrow {
+  color: var(--roze);
+}
+.lak .eyebrow::before {
+  background: linear-gradient(90deg, var(--roze), var(--orchidee));
 }
 
 .page-head {
@@ -460,7 +501,9 @@ main {
     linear-gradient(180deg, var(--c1, #d63a86), var(--c2, var(--fuchsia-diep)));
 }
 
-/* ---------- Knoppen: gelakt, altijd op een donker vlak ---------- */
+/* ---------- Knoppen: twee gelakte pillen, altijd op een donker vlak ----------
+   Bellen in fuchsia, WhatsApp in parelroze: dezelfde vorm, dezelfde glans en dezelfde schaduw,
+   zodat ze als een paar lezen en geen van beide de ander wegdrukt. */
 .actions {
   display: grid;
   gap: 0.75rem;
@@ -472,10 +515,10 @@ main {
   overflow: hidden;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  min-height: 3.75rem;
-  padding: 0.75rem 1.5rem;
+  justify-content: flex-start;
+  gap: 0.85rem;
+  min-height: 4rem;
+  padding: 0.6rem 1.5rem 0.6rem 0.6rem;
   font: inherit;
   font-weight: 500;
   line-height: 1.2;
@@ -484,47 +527,82 @@ main {
   border-radius: 999px;
   cursor: pointer;
   touch-action: manipulation;
-  transition: transform 140ms var(--ease), box-shadow 140ms;
+  transition:
+    transform 160ms var(--ease),
+    box-shadow 160ms var(--ease),
+    filter 160ms;
+}
+/* lichtrand bovenin: de verse lak */
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 1px 1px 50%;
+  z-index: -1;
+  border-radius: 999px 999px 40% 40% / 999px 999px 30% 30%;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0));
+  pointer-events: none;
 }
 .button svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.3rem;
+  height: 1.3rem;
   flex: none;
 }
+/* het icoon in een eigen kraaltje */
+.button__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+}
+.button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
 .button:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 .button--primary {
   color: #fff;
-  background: linear-gradient(180deg, #c9267a 0%, #a8125f 58%, var(--fuchsia-diep) 100%);
+  background: var(--lak-fuchsia);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.4),
-    inset 0 -3px 8px rgb(0 0 0 / 0.22),
-    0 14px 30px -10px rgb(201 38 122 / 0.7);
+    var(--lak-rand),
+    0 12px 26px -16px rgb(0 0 0 / 0.75);
 }
-.button--primary::before {
-  content: '';
-  position: absolute;
-  inset: 1px 4% auto;
-  height: 48%;
-  z-index: -1;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0));
+.button--primary .button__icon {
+  background: rgb(255 255 255 / 0.16);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
 }
-.button--primary:hover {
+.button--light {
+  color: var(--lak-900);
+  background: linear-gradient(180deg, #fffafc 0%, #f7e1ec 100%);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.45),
-    inset 0 -3px 8px rgb(0 0 0 / 0.22),
-    0 18px 36px -10px rgb(201 38 122 / 0.85);
+    inset 0 1px 0 #fff,
+    inset 0 0 0 1px rgb(255 255 255 / 0.5),
+    0 12px 26px -16px rgb(0 0 0 / 0.75);
 }
-.button--glass {
-  color: var(--op-lak);
-  background: rgb(255 255 255 / 0.08);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.2);
-  backdrop-filter: blur(8px);
+.button--light::before {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0));
 }
-.button--glass:hover {
-  background: rgb(255 255 255 / 0.14);
+.button--light .button__icon {
+  color: var(--fuchsia-tekst);
+  background: rgb(201 38 122 / 0.1);
+  box-shadow: inset 0 0 0 1px rgb(201 38 122 / 0.14);
+}
+.button--light .button__sub {
+  color: var(--inkt-zacht);
+  opacity: 1;
+}
+/* op een licht vlak: WhatsApp en Apple Maps worden wit met een rand, zodat ze niet wegvallen */
+.op-licht .button--light {
+  background: linear-gradient(180deg, #fff 0%, #fdf5f9 100%);
+  box-shadow:
+    inset 0 0 0 1px var(--lijn),
+    0 12px 26px -18px rgb(90 20 70 / 0.5);
+}
+.op-licht .button:focus-visible {
+  outline-color: var(--fuchsia-tekst);
 }
 .button:focus-visible {
   outline: 3px solid var(--roze);
@@ -535,9 +613,10 @@ main {
 }
 .button__sub {
   display: block;
+  margin-top: 0.1rem;
   font-size: var(--t-s);
   font-weight: 400;
-  opacity: 0.9;
+  opacity: 0.88;
 }
 
 /* ---------- Glazen kaart op parel ---------- */
@@ -612,6 +691,18 @@ main {
   background: var(--blos);
   font-weight: 600;
 }
+.hours__row[aria-current='date'] dt::after {
+  content: 'vandaag';
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  vertical-align: 0.1em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #fff;
+  border-radius: 999px;
+  background: var(--lak-fuchsia);
+}
 .hours__closed {
   color: var(--inkt-zacht);
 }
@@ -664,7 +755,8 @@ main {
 .signature {
   font-family: var(--display);
   font-size: var(--t-h2);
-  font-weight: 500;
+  font-weight: 600;
+  font-variation-settings: 'opsz' 28;
   margin-top: 1.25rem;
 }
 
@@ -678,9 +770,23 @@ main {
 }
 
 /* ---------- Footer ---------- */
+/* dieper dan het afspraakblok erboven, met een lichtnaad ertussen */
 .site-footer {
+  position: relative;
   padding-block: 3.5rem calc(var(--dock-h) + var(--dock-gap) + 3rem);
   color: var(--op-lak-zacht);
+  background:
+    radial-gradient(80% 50% at 85% 0%, rgb(224 85 154 / 0.14), transparent 70%),
+    linear-gradient(180deg, var(--lak-950), #0c030a);
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(246 169 203 / 0.4) 30%, rgb(246 169 203 / 0.4) 70%, transparent);
 }
 .site-footer .wordmark {
   display: inline-block;
@@ -892,6 +998,47 @@ main {
   .card,
   .sheet {
     border: 2px solid CanvasText;
+  }
+}
+
+/* ---------- Bij het scrollen: onderdelen komen rustig omhoog ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .photo,
+    .lijst,
+    .kaart,
+    .card,
+    .condition__photo {
+      animation: rijs linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+  /* het tiprek alleen op groot scherm: op mobiel is het zelf een zijwaartse scroller */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 64rem) {
+    .tips > li {
+      animation: rijs linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    .tips > li:nth-child(2) {
+      animation-range: entry 5% entry 60%;
+    }
+    .tips > li:nth-child(3) {
+      animation-range: entry 10% entry 65%;
+    }
+    .tips > li:nth-child(4) {
+      animation-range: entry 15% entry 70%;
+    }
+    .tips > li:nth-child(5) {
+      animation-range: entry 20% entry 75%;
+    }
+  }
+}
+@keyframes rijs {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
 }
 

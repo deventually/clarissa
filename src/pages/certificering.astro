@@ -17,8 +17,9 @@ import tip from '../assets/certificaten-tip.jpg';
     alt="Ingelijste certificaten en diploma's aan de muur van de salon."
   />
   <section class="section" aria-labelledby="wat">
-    <div class="wrap">
+    <div class="wrap provoet">
       <div class="prose">
+        <p class="eyebrow">Kwaliteit en hygiëne</p>
         <h2 id="wat">Wat is ProVoet?</h2>
         <p>
           ProVoet is de landelijke brancheorganisatie voor pedicures en behartigt de belangen van ruim 13.000 (aspirant-)leden.
@@ -27,6 +28,12 @@ import tip from '../assets/certificaten-tip.jpg';
         <p>De pedicures die bij ProVoet zijn aangesloten staan voor kwaliteit en hygiëne. Je herkent ze aan het ProVoet-logo.</p>
         <p><a href="https://www.provoet.nl" rel="noopener">Naar de website van ProVoet</a></p>
       </div>
+
+      <!-- het logo in de eigen kleuren van ProVoet, op een wit kaartje: een merk verkleur je niet -->
+      <figure class="logo-kaart">
+        <img src="/provoet-logo.svg" alt="Het logo van ProVoet, de professionele pedicure" width="112" height="63" />
+        <figcaption>Aan dit logo herken je een pedicure die bij ProVoet is aangesloten, zoals Clarissa.</figcaption>
+      </figure>
     </div>
   </section>
   <BookBlock />
@@ -35,5 +42,40 @@ import tip from '../assets/certificaten-tip.jpg';
 <style>
   .prose h2 {
     margin-bottom: 1rem;
+  }
+  .provoet {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .logo-kaart {
+    margin: 0;
+    padding: 2rem 2rem 1.5rem;
+    border-radius: var(--r-l);
+    background: #fff;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.9),
+      0 0 0 0.55rem rgb(255 255 255 / 0.55),
+      0 1px 2px rgb(90 20 70 / 0.06),
+      0 40px 70px -36px rgb(120 20 80 / 0.45);
+  }
+  .logo-kaart img {
+    width: min(100%, 18rem);
+    height: auto;
+    margin-inline: auto;
+  }
+  .logo-kaart figcaption {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--lijn);
+    font-size: var(--t-s);
+    color: var(--inkt-zacht);
+    text-align: center;
+  }
+  @media (min-width: 64rem) {
+    .provoet {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 5rem;
+      align-items: center;
+    }
   }
 </style>

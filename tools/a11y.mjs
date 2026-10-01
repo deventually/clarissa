@@ -8,6 +8,8 @@ try {
   for (const vp of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
     const page = await browser.newPage();
     await page.setViewport(vp);
+    // Zonder beweging: anders meet axe het contrast van onderdelen die nog half ingefaded zijn.
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     for (const p of pages) {
       await page.goto((process.env.BASE ?? 'http://localhost:4321') + p, { waitUntil: 'networkidle0' });
       await page.addScriptTag({ content: axe });

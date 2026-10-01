@@ -7,6 +7,7 @@ import { conditions } from '../data/salon';
 import hielkloven from '../assets/hielkloven.jpg';
 import likdoorns from '../assets/likdoorns.jpg';
 import teennagel from '../assets/ingroeiende-teennagel.jpg';
+import tip from '../assets/voetklachten-tip.jpg';
 
 const photos = {
   hielkloven: { src: hielkloven, alt: 'Een hiel met droge, gebarsten huid.' },
@@ -23,7 +24,8 @@ const photos = {
   <PageHead
     title="Voetklachten"
     lead="Drie klachten die Clarissa vaak ziet: hoe je ze herkent, waar ze vandaan komen en wat eraan te doen is."
-    lak={['#c47bb6', '#5e2155']}
+    image={tip}
+    alt="Handen in roze handschoenen smeren met een kwast een masker op een voet, boven een voetbad."
   >
     <nav class="toc" aria-label="Op deze pagina">
       <ul>
@@ -38,7 +40,13 @@ const photos = {
         <div class="wrap condition">
           <figure class="photo condition__photo">
             <div class="photo__frame">
-              <Image src={photos[c.id].src} alt={photos[c.id].alt} width={200} loading="lazy" />
+              <Image
+                src={photos[c.id].src}
+                alt={photos[c.id].alt}
+                widths={[320, 480, 640, 800]}
+                sizes="(min-width: 64rem) 18rem, 14rem"
+                loading="lazy"
+              />
             </div>
           </figure>
           <div class="prose">
@@ -87,14 +95,14 @@ const photos = {
     gap: 1.5rem;
   }
   .condition__photo {
-    width: 10rem;
+    width: 14rem;
   }
   .condition .lead {
     margin-block: 1rem 0.5rem;
   }
   @media (min-width: 64rem) {
     .condition {
-      grid-template-columns: 14rem minmax(0, 1fr);
+      grid-template-columns: 18rem minmax(0, 1fr);
       gap: 4rem;
     }
     .condition__photo {

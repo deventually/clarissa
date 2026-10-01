@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nail from '../components/Nail.astro';
+import Icon from '../components/Icon.astro';
 import CallActions from '../components/CallActions.astro';
 import Hours from '../components/Hours.astro';
 import BookBlock from '../components/BookBlock.astro';
@@ -12,13 +13,14 @@ import pedicureTip from '../assets/pedicure-tip.jpg';
 import manicureTip from '../assets/manicure-tip.jpg';
 import certificatenTip from '../assets/certificaten-tip.jpg';
 import wachtkamerTip from '../assets/wachtkamer-tip.jpg';
+import voetklachtenTip from '../assets/voetklachten-tip.jpg';
 import werkkamer from '../assets/werkkamer.jpg';
 
 // Het tiprek: zoals de gelakte nageltips in de salon, één tip per onderwerp.
 const tips = [
   { href: '/pedicure', name: 'Pedicure', meta: `${pedicure.length} behandelingen`, src: pedicureTip },
   { href: '/manicure', name: 'Manicure', meta: `${manicure.length} behandelingen, ook gellak`, src: manicureTip },
-  { href: '/aandoeningen', name: 'Voetklachten', meta: 'Herkennen en verzorgen', lak: ['#c47bb6', '#5e2155'] as [string, string] },
+  { href: '/aandoeningen', name: 'Voetklachten', meta: 'Herkennen en verzorgen', src: voetklachtenTip },
   { href: '/over-clarissa', name: 'Over Clarissa', meta: 'Gediplomeerd, lid van ProVoet', src: certificatenTip },
   { href: '/contact', name: 'De salon', meta: salon.street, src: wachtkamerTip },
 ];
@@ -26,11 +28,12 @@ const tips = [
 
 <Base
   page="home"
-  title="Thuis"
+  title="Home"
   description="Pedicure en manicure bij Clarissa aan het Goudenregenplein in Den Haag. Aangesloten bij ProVoet. Bel of app voor een afspraak: 06 57 666 797."
 >
   <section class="hero lak" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
+      <p class="eyebrow hero__eyebrow">Pedicure &amp; manicure in Den Haag</p>
       <h1 id="hero-title" class="hero__title">Tot in de puntjes verzorgd.</h1>
       <div class="hero__nail">
         <Nail
@@ -44,6 +47,11 @@ const tips = [
       <div class="hero__body">
         <p class="lead">Pedicure en manicure bij Clarissa, aan het Goudenregenplein in Den Haag.</p>
         <CallActions />
+        <ul class="perks" role="list">
+          <li><Icon name="check" />Aangesloten bij ProVoet</li>
+          <li><Icon name="check" />Gratis parkeren tot 18:00</li>
+          <li><Icon name="check" />Tram 12 en RandstadRail 3</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -51,7 +59,10 @@ const tips = [
   <section class="section" aria-labelledby="tips-title">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="tips-title">Behandelingen en de salon</h2>
+        <div>
+          <p class="eyebrow">Ontdek</p>
+          <h2 id="tips-title">Behandelingen en de salon</h2>
+        </div>
         <p>Prijzen, uitleg over voetklachten en alles over Clarissa.</p>
       </div>
     </div>
@@ -61,7 +72,10 @@ const tips = [
           <li>
             <a class="tip" href={t.href}>
               <Nail src={t.src} lak={t.lak} sizes="(min-width: 64rem) 13rem, 42vw" class="tip__nail" />
-              <span class="tip__name">{t.name}</span>
+              <span class="tip__name">
+                {t.name}
+                <Icon name="chevron" />
+              </span>
               <span class="tip__meta">{t.meta}</span>
             </a>
           </li>
@@ -73,6 +87,7 @@ const tips = [
   <section class="section section--blos" aria-labelledby="welkom">
     <div class="wrap welcome">
       <div class="welcome__text">
+        <p class="eyebrow">Welkom</p>
         <h2 id="welkom">Dag vermoeide voeten. Welkom, verzorgde nagels.</h2>
         <p class="lead welcome__lead">
           Geef je voeten de aandacht die ze verdienen: van gezonde voeten word je vrolijk, en je dag wordt er relaxter van.
@@ -102,6 +117,7 @@ const tips = [
   <section class="section" aria-labelledby="openingstijden">
     <div class="wrap split">
       <div>
+        <p class="eyebrow">Langskomen</p>
         <h2 id="openingstijden">Openingstijden</h2>
         <p class="split__sub">
           {salon.street}, {salon.city}. Tram 12 en RandstadRail 3 stoppen vlakbij, en parkeren is tot 18:00 gratis.
@@ -127,16 +143,21 @@ const tips = [
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     grid-template-areas:
+      'eyebrow eyebrow'
       'title nail'
       'body body';
     column-gap: 1rem;
     row-gap: 1.75rem;
     align-items: center;
   }
+  .hero__eyebrow {
+    grid-area: eyebrow;
+    margin-bottom: -0.75rem;
+  }
   .hero__title {
     grid-area: title;
     font-size: clamp(2.6rem, 1rem + 7vw, 7rem);
-    line-height: 0.98;
+    line-height: 1;
   }
   .hero__nail {
     grid-area: nail;
@@ -155,6 +176,28 @@ const tips = [
   }
   .hero__body .lead {
     margin-bottom: 1.5rem;
+  }
+
+  /* drie redenen om te komen, klein onder de knoppen */
+  .perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    font-size: var(--t-s);
+    color: var(--op-lak-zacht);
+  }
+  .perks li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .perks :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--roze);
   }
 
   /* het tiprek: scrollt opzij op mobiel, staat in één rij op groot scherm */
@@ -192,14 +235,21 @@ const tips = [
     transform: translateY(-6px) rotate(-2deg);
   }
   .tip__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     font-size: var(--t-h3);
     font-weight: 500;
     line-height: 1.25;
   }
-  .tip:hover .tip__name {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
+  .tip__name :global(svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+    color: var(--fuchsia-tekst);
+    transition: transform 260ms var(--ease);
+  }
+  .tip:hover .tip__name :global(svg) {
+    transform: translateX(4px);
   }
   .tip__meta {
     font-size: var(--t-s);
@@ -249,17 +299,22 @@ const tips = [
     }
     .hero__grid {
       grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      /* lege rijen boven en onder centreren de tekst naast de nagel */
       grid-template-areas:
+        '. nail'
+        'eyebrow nail'
         'title nail'
-        'body nail';
+        'body nail'
+        '. nail';
+      grid-template-rows: 1fr auto auto auto 1fr;
       column-gap: 5rem;
-      row-gap: 2.5rem;
+      row-gap: 0;
+    }
+    .hero__eyebrow {
+      margin-bottom: 1.25rem;
     }
     .hero__title {
-      align-self: end;
-    }
-    .hero__body {
-      align-self: start;
+      margin-bottom: 2.25rem;
     }
     .hero__nail {
       max-width: 28rem;

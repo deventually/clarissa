@@ -1,7 +1,7 @@
 ---
 // Lijniconen op een raster van 24px. Altijd decoratief: de tekst ernaast draagt de betekenis.
 interface Props {
-  name: 'home' | 'foot' | 'polish' | 'pin' | 'phone' | 'chat' | 'chevron' | 'close' | 'calendar';
+  name: 'home' | 'foot' | 'polish' | 'pin' | 'phone' | 'chat' | 'chevron' | 'close' | 'calendar' | 'check' | 'navigate' | 'tram' | 'car' | 'arrow-out';
 }
 const { name } = Astro.props;
 ---
@@ -55,6 +55,29 @@ const { name } = Astro.props;
   {name === 'chat' && <path d="M4.5 12a7.5 7.5 0 1 1 3.4 6.3L4 19.5l1.3-3.6A7.5 7.5 0 0 1 4.5 12z" />}
   {name === 'chevron' && <path d="m9.5 6 6 6-6 6" />}
   {name === 'close' && <path d="M6.5 6.5l11 11m0-11-11 11" />}
+  {name === 'check' && <path d="m5 12.5 4.5 4.5L19 7.5" />}
+  {name === 'navigate' && <path d="M20 4 4 10.6l7.2 2.2 2.2 7.2z" />}
+  {
+    name === 'tram' && (
+      <>
+        <rect x="6" y="6" width="12" height="12" rx="3" />
+        <path d="M6 12.5h12M10 3.5h4M12 3.5V6M9 18l-1.5 2.5M15 18l1.5 2.5" />
+        <circle cx="9.3" cy="15.2" r=".5" />
+        <circle cx="14.7" cy="15.2" r=".5" />
+      </>
+    )
+  }
+  {
+    name === 'car' && (
+      <>
+        <path d="M4.5 16.5v-4.2L6.7 7.5h10.6l2.2 4.8v4.2z" />
+        <path d="M4.5 12.3h15M6 16.5v2M18 16.5v2" />
+        <circle cx="8" cy="14.4" r=".5" />
+        <circle cx="16" cy="14.4" r=".5" />
+      </>
+    )
+  }
+  {name === 'arrow-out' && <path d="M8 16 16 8m-6.5 0H16v6.5" />}
   {
     name === 'calendar' && (
       <>
