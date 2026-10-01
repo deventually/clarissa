@@ -1,11 +1,12 @@
 ---
+import { url } from '../url';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 ---
 
 <Base page="none" title="Pagina niet gevonden" description="Deze pagina bestaat niet (meer).">
   <PageHead title="Pagina niet gevonden" lead="Misschien is het adres veranderd." lak={['#c9267a', '#5e1040']}>
-    <p class="links404">Ga naar <a href="/">de beginpagina</a>, of bekijk de prijzen voor <a href="/pedicure">pedicure</a> en <a href="/manicure">manicure</a>.</p>
+    <p class="links404">Ga naar <a href={url('/')}>de beginpagina</a>, of bekijk de prijzen voor <a href={url('/pedicure')}>pedicure</a> en <a href={url('/manicure')}>manicure</a>.</p>
   </PageHead>
 </Base>
 

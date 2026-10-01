@@ -1,7 +1,10 @@
 import { defineConfig } from 'astro/config';
 
+// Zonder omgevingsvariabelen bouwt de site voor het eigen domein. De deploy-workflow naar GitHub Pages
+// zet SITE en BASE_PATH, zodat de proefversie op deventually.github.io/clarissa werkt.
 export default defineConfig({
-  site: 'https://clarissa-bodyandstyle.nl',
+  site: process.env.SITE ?? 'https://clarissa-bodyandstyle.nl',
+  base: process.env.BASE_PATH ?? '/',
   // /pedicure in plaats van /pedicure/, zodat de oude adressen blijven werken
   build: { format: 'file' },
   trailingSlash: 'never',

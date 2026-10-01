@@ -1,7 +1,8 @@
 ---
+import { url } from '../url';
 // Zonder JavaScript staan hier de vaste tijden; status.ts maakt er "Nu open, tot 19:00" van.
 ---
 
-<a class="status" href="/contact#openingstijden" data-status>
+<a class="status" href={url('/contact#openingstijden')} data-status>
   <span data-status-text>Di–za vanaf 10:00</span>
 </a>

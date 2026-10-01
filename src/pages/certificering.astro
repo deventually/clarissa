@@ -1,4 +1,5 @@
 ---
+import { url } from '../url';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import BookBlock from '../components/BookBlock.astro';
@@ -31,7 +32,7 @@ import tip from '../assets/certificaten-tip.jpg';
 
       <!-- het logo in de eigen kleuren van ProVoet, op een wit kaartje: een merk verkleur je niet -->
       <figure class="logo-kaart">
-        <img src="/provoet-logo.svg" alt="Het logo van ProVoet, de professionele pedicure" width="112" height="63" />
+        <img src={url('/provoet-logo.svg')} alt="Het logo van ProVoet, de professionele pedicure" width="112" height="63" />
         <figcaption>Aan dit logo herken je een pedicure die bij ProVoet is aangesloten, zoals Clarissa.</figcaption>
       </figure>
     </div>

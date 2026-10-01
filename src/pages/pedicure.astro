@@ -1,4 +1,5 @@
 ---
+import { url } from '../url';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import PriceList from '../components/PriceList.astro';
@@ -23,7 +24,7 @@ import tip from '../assets/pedicure-tip.jpg';
     <div class="wrap">
       <div class="section-head">
         <h2 id="prijzen">Prijzen</h2>
-        <p>Last van hielkloven, likdoorns of een ingroeiende nagel? <a href="/aandoeningen">Lees over voetklachten</a>.</p>
+        <p>Last van hielkloven, likdoorns of een ingroeiende nagel? <a href={url('/aandoeningen')}>Lees over voetklachten</a>.</p>
       </div>
       <div class="card"><PriceList items={pedicure} /></div>
     </div>

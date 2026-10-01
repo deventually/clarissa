@@ -1,4 +1,5 @@
 ---
+import { url } from '../url';
 import Base from '../layouts/Base.astro';
 import Nail from '../components/Nail.astro';
 import Icon from '../components/Icon.astro';
@@ -18,11 +19,11 @@ import werkkamer from '../assets/werkkamer.jpg';
 
 // Het tiprek: zoals de gelakte nageltips in de salon, één tip per onderwerp.
 const tips = [
-  { href: '/pedicure', name: 'Pedicure', meta: `${pedicure.length} behandelingen`, src: pedicureTip },
-  { href: '/manicure', name: 'Manicure', meta: `${manicure.length} behandelingen, ook gellak`, src: manicureTip },
-  { href: '/aandoeningen', name: 'Voetklachten', meta: 'Herkennen en verzorgen', src: voetklachtenTip },
-  { href: '/over-clarissa', name: 'Over Clarissa', meta: 'Gediplomeerd, lid van ProVoet', src: certificatenTip },
-  { href: '/contact', name: 'De salon', meta: salon.street, src: wachtkamerTip },
+  { href: url('/pedicure'), name: 'Pedicure', meta: `${pedicure.length} behandelingen`, src: pedicureTip },
+  { href: url('/manicure'), name: 'Manicure', meta: `${manicure.length} behandelingen, ook gellak`, src: manicureTip },
+  { href: url('/aandoeningen'), name: 'Voetklachten', meta: 'Herkennen en verzorgen', src: voetklachtenTip },
+  { href: url('/over-clarissa'), name: 'Over Clarissa', meta: 'Gediplomeerd, lid van ProVoet', src: certificatenTip },
+  { href: url('/contact'), name: 'De salon', meta: salon.street, src: wachtkamerTip },
 ];
 ---
 
@@ -97,7 +98,7 @@ const tips = [
           is aangesloten bij ProVoet, de organisatie die kwaliteit en hygiëne in de voetverzorging bevordert.
         </p>
         <p class="signature">Clarissa</p>
-        <p><a href="/over-clarissa">Meer over Clarissa</a></p>
+        <p><a href={url('/over-clarissa')}>Meer over Clarissa</a></p>
       </div>
       <figure class="photo welcome__photo">
         <div class="photo__frame">
@@ -122,7 +123,7 @@ const tips = [
         <p class="split__sub">
           {salon.street}, {salon.city}. Tram 12 en RandstadRail 3 stoppen vlakbij, en parkeren is tot 18:00 gratis.
         </p>
-        <p><a href="/contact">Route en parkeren</a></p>
+        <p><a href={url('/contact')}>Route en parkeren</a></p>
       </div>
       <div class="card">
         <Hours />

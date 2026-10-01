@@ -1,4 +1,5 @@
 ---
+import { url } from '../url';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import OpenStatus from '../components/OpenStatus.astro';
@@ -16,21 +17,29 @@ interface Props {
 
 const { title, description, page, theme } = Astro.props;
 const fullTitle = page === 'home' ? `${salon.name} | Pedicure en manicure in Den Haag` : `${title} | ${salon.name}`;
-const canonical = new URL(Astro.url.pathname, salon.url).href;
+// canonical wijst altijd naar het eigen domein, zonder de submap van de proefversie
+// en zonder .html: de adressen zijn /pedicure en /, niet /pedicure.html en /index.html
+const pad =
+  Astro.url.pathname
+    .slice(import.meta.env.BASE_URL.replace(/\/$/, '').length)
+    .replace(/(index)?\.html$/, '') || '/';
+const canonical = new URL(pad, salon.url).href;
+// de proefversie op GitHub Pages hoort niet in Google: die zou de echte site verdringen
+const proefversie = Astro.site?.origin !== new URL(salon.url).origin;
 
 const tabs = [
-  { href: '/', label: 'Home', icon: 'home', page: 'home' },
-  { href: '/pedicure', label: 'Pedicure', icon: 'foot', page: 'pedicure' },
-  { href: '/manicure', label: 'Manicure', icon: 'polish', page: 'manicure' },
-  { href: '/contact', label: 'Contact', icon: 'pin', page: 'contact' },
+  { href: url('/'), label: 'Home', icon: 'home', page: 'home' },
+  { href: url('/pedicure'), label: 'Pedicure', icon: 'foot', page: 'pedicure' },
+  { href: url('/manicure'), label: 'Manicure', icon: 'polish', page: 'manicure' },
+  { href: url('/contact'), label: 'Contact', icon: 'pin', page: 'contact' },
 ] as const;
 
 const nav = [
-  { href: '/pedicure', label: 'Pedicure', page: 'pedicure' },
-  { href: '/manicure', label: 'Manicure', page: 'manicure' },
-  { href: '/aandoeningen', label: 'Voetklachten', page: 'aandoeningen' },
-  { href: '/over-clarissa', label: 'Over Clarissa', page: 'over' },
-  { href: '/contact', label: 'Contact', page: 'contact' },
+  { href: url('/pedicure'), label: 'Pedicure', page: 'pedicure' },
+  { href: url('/manicure'), label: 'Manicure', page: 'manicure' },
+  { href: url('/aandoeningen'), label: 'Voetklachten', page: 'aandoeningen' },
+  { href: url('/over-clarissa'), label: 'Over Clarissa', page: 'over' },
+  { href: url('/contact'), label: 'Contact', page: 'contact' },
 ] as const;
 
 const dayCodes = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -62,9 +71,10 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {proefversie && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#1a0817" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -84,7 +94,7 @@ const jsonLd = {
 
     <header class="site-header">
       <div class="site-header__inner">
-        <a class="wordmark" href="/" aria-current={page === 'home' ? 'page' : undefined}>
+        <a class="wordmark" href={url('/')} aria-current={page === 'home' ? 'page' : undefined}>
           <span class="wordmark__line">Clarissa</span> <span class="wordmark__line">Body &amp; Style</span>
         </a>
         <OpenStatus />
@@ -106,15 +116,15 @@ const jsonLd = {
               {salon.postcode} {salon.city}<br />
               <a href={salon.phoneHref}>{salon.phoneDisplay}</a>
             </address>
-            <p><a href="/contact#route">Route plannen</a></p>
-            <p><a href="/contact#openingstijden">Openingstijden</a></p>
+            <p><a href={url('/contact#route')}>Route plannen</a></p>
+            <p><a href={url('/contact#openingstijden')}>Openingstijden</a></p>
           </div>
           <nav aria-labelledby="f-paginas">
             <h2 class="footer-title" id="f-paginas">Alle pagina's</h2>
             <ul>
-              <li><a href="/">Home</a></li>
+              <li><a href={url('/')}>Home</a></li>
               {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-              <li><a href="/certificering">ProVoet-certificering</a></li>
+              <li><a href={url('/certificering')}>ProVoet-certificering</a></li>
             </ul>
           </nav>
           <div>
@@ -140,7 +150,7 @@ const jsonLd = {
           ))
         }
         <li>
-          <a class="tab tab--action" href="/contact#afspraak" data-sheet-open>
+          <a class="tab tab--action" href={url('/contact#afspraak')} data-sheet-open>
             <span class="tab__icon"><Icon name="calendar" /></span>
             Afspraak
           </a>

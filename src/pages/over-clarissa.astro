@@ -1,4 +1,5 @@
 ---
+import { url } from '../url';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import BookBlock from '../components/BookBlock.astro';
@@ -57,7 +58,7 @@ import wachtkamer from '../assets/wachtkamer.jpg';
           Aan de muur van de salon hangen Clarissa's certificaten en diploma's. Clarissa Body &amp; Style is ingeschreven bij ProVoet,
           de landelijke brancheorganisatie voor pedicures. ProVoet-pedicures staan voor kwaliteit en hygiëne.
         </p>
-        <p><a href="/certificering">Meer over de ProVoet-certificering</a></p>
+        <p><a href={url('/certificering')}>Meer over de ProVoet-certificering</a></p>
       </div>
       <Lijst
         src={certificaten}
