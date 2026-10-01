@@ -1,0 +1,22 @@
+---
+import { hours } from '../data/salon';
+// Vandaag krijgt aria-current="date"; dat zet status.ts in de browser.
+---
+
+<dl class="hours" data-hours>
+  {
+    hours.map((d) => (
+      <div class="hours__row" data-day={d.day}>
+        <dt>{d.name}</dt>
+        {d.open ? (
+          <dd>
+            <span aria-hidden="true">{d.open} – {d.close}</span>
+            <span class="visually-hidden">van {d.open} tot {d.close}</span>
+          </dd>
+        ) : (
+          <dd class="hours__closed">gesloten</dd>
+        )}
+      </div>
+    ))
+  }
+</dl>

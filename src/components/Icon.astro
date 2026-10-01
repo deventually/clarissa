@@ -1,0 +1,66 @@
+---
+// Lijniconen op een raster van 24px. Altijd decoratief: de tekst ernaast draagt de betekenis.
+interface Props {
+  name: 'home' | 'foot' | 'polish' | 'pin' | 'phone' | 'chat' | 'chevron' | 'close' | 'calendar';
+}
+const { name } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'home' && <path d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H5.5A1.5 1.5 0 0 1 4 19z" />}
+  {
+    name === 'foot' && (
+      <>
+        <path d="M10.2 21c-2.4 0-3.7-2-3.7-4.4 0-2.7 1.4-4.2 1.6-6.3.2-1.6 1.1-2.4 2.4-2.4 1.6 0 2.6 1.3 2.6 3.2 0 2-1 3.2-1 5.6 0 2.5-.2 4.3-1.9 4.3z" />
+        <circle cx="9.6" cy="4.3" r="1.5" />
+        <circle cx="12.6" cy="4.6" r="1.05" />
+        <circle cx="14.8" cy="5.9" r=".85" />
+        <circle cx="16.3" cy="7.7" r=".7" />
+      </>
+    )
+  }
+  {
+    name === 'polish' && (
+      <>
+        <path d="M10 3h4v5h-4z" />
+        <path d="M9 8h6a3 3 0 0 1 3 3v7.5a2.5 2.5 0 0 1-2.5 2.5h-6A2.5 2.5 0 0 1 7 18.5V11a3 3 0 0 1 2-3z" />
+        <path d="M10 12.5v4" />
+      </>
+    )
+  }
+  {
+    name === 'pin' && (
+      <>
+        <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+        <circle cx="12" cy="10" r="2.3" />
+      </>
+    )
+  }
+  {
+    name === 'phone' && (
+      <path d="M6.6 3.5h2.6l1.4 4-2 1.5a12 12 0 0 0 6.4 6.4l1.5-2 4 1.4v2.6a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 4.6 5.6a2 2 0 0 1 2-2.1z" />
+    )
+  }
+  {name === 'chat' && <path d="M4.5 12a7.5 7.5 0 1 1 3.4 6.3L4 19.5l1.3-3.6A7.5 7.5 0 0 1 4.5 12z" />}
+  {name === 'chevron' && <path d="m9.5 6 6 6-6 6" />}
+  {name === 'close' && <path d="M6.5 6.5l11 11m0-11-11 11" />}
+  {
+    name === 'calendar' && (
+      <>
+        <rect x="4" y="5.5" width="16" height="15" rx="2" />
+        <path d="M4 10h16M8.5 3.5v4m7-4v4" />
+      </>
+    )
+  }
+</svg>

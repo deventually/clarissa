@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import PriceList from '../components/PriceList.astro';
+import BookBlock from '../components/BookBlock.astro';
+import { pedicure } from '../data/salon';
+import tip from '../assets/pedicure-tip.jpg';
+---
+
+<Base
+  page="pedicure"
+  title="Pedicure"
+  description="Pedicure in Den Haag: korte en uitgebreide pedicure, likdoorns, nagelbeugels en lakken. Bekijk de prijzen en bel of app voor een afspraak."
+>
+  <PageHead
+    title="Pedicure"
+    lead="Van een korte opfrisbeurt tot een uitgebreide behandeling met eelt en likdoorns. Elke pedicure eindigt met een korte voetmassage."
+    image={tip}
+    alt="Verzorgde voeten met roze gelakte teennagels en een orchidee."
+  />
+
+  <section class="section" aria-labelledby="prijzen">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="prijzen">Prijzen</h2>
+        <p>Last van hielkloven, likdoorns of een ingroeiende nagel? <a href="/aandoeningen">Lees over voetklachten</a>.</p>
+      </div>
+      <div class="card"><PriceList items={pedicure} /></div>
+    </div>
+  </section>
+
+  <BookBlock />
+</Base>

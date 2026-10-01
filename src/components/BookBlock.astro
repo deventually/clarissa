@@ -1,0 +1,41 @@
+---
+import CallActions from './CallActions.astro';
+import { salon } from '../data/salon';
+interface Props {
+  heading?: string;
+}
+const { heading = 'Afspraak maken' } = Astro.props;
+---
+
+<section class="section lak book" aria-labelledby="afspraak">
+  <div class="wrap book__grid">
+    <div>
+      <h2 id="afspraak">{heading}</h2>
+      <p class="lead book__intro">Bel of stuur een WhatsApp-bericht, en zeg erbij welke behandeling je wilt.</p>
+    </div>
+    <div>
+      <CallActions />
+      <p class="note book__note">{salon.cancellation}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .book__grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .book__intro {
+    margin-top: 1rem;
+  }
+  .book__note {
+    margin-top: 1.25rem;
+  }
+  @media (min-width: 64rem) {
+    .book__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: end;
+    }
+  }
+</style>

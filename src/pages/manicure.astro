@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import PriceList from '../components/PriceList.astro';
+import BookBlock from '../components/BookBlock.astro';
+import { manicure } from '../data/salon';
+import tip from '../assets/manicure-tip.jpg';
+
+// een greep uit de lakkleuren, als een rij nageltips
+const swatches = ['#8e1b3a', '#c9267a', '#e7a1b6', '#ecd3c8', '#b565a7', '#5d2a4c'];
+---
+
+<Base
+  page="manicure"
+  title="Manicure"
+  description="Manicure en gellak in Den Haag. Gellak blijft minstens drie weken mooi, en eraf vijlen voor een nieuwe kleur rekenen we niet extra. Bekijk de prijzen."
+>
+  <PageHead
+    title="Manicure"
+    lead="Verzorgde nagels en zachte handen. Met gewone lak of gellak, in de kleur die jij kiest."
+    image={tip}
+    alt="Nagels met glanzende roze lak."
+  >
+    <div class="lakkaart" aria-hidden="true">
+      {swatches.map((c) => <span class="lak-tip" style={`--c:${c}`} />)}
+    </div>
+  </PageHead>
+
+  <section class="section" aria-labelledby="prijzen">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="prijzen">Prijzen</h2>
+        <p>Een nieuwe kleur gellak? Het eraf vijlen rekenen we niet extra.</p>
+      </div>
+      <div class="card"><PriceList items={manicure} /></div>
+    </div>
+  </section>
+
+  <BookBlock />
+</Base>
+
+<style>
+  .lakkaart {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 1.5rem;
+    max-width: 20rem;
+  }
+  .lak-tip {
+    flex: 1;
+    aspect-ratio: 3 / 4.4;
+    border-radius: 50% 50% 46% 46% / 40% 40% 22% 22%;
+    background:
+      radial-gradient(40% 22% at 34% 16%, rgb(255 255 255 / 0.6), transparent 70%),
+      linear-gradient(104deg, transparent 20%, rgb(255 255 255 / 0.25) 30%, transparent 44%),
+      linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.25)),
+      var(--c);
+    box-shadow:
+      inset 0 1px 1px rgb(255 255 255 / 0.5),
+      0 8px 16px -8px rgb(0 0 0 / 0.6);
+  }
+</style>

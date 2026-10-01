@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import BookBlock from '../components/BookBlock.astro';
+import { Image } from 'astro:assets';
+import tip from '../assets/certificaten-tip.jpg';
+import certificaten from '../assets/certificaten.jpg';
+import wachtkamer from '../assets/wachtkamer.jpg';
+---
+
+<Base
+  page="over"
+  title="Over Clarissa"
+  description="Clarissa verzorgt handen en voeten aan het Goudenregenplein in Den Haag. Ze is gediplomeerd en aangesloten bij ProVoet."
+>
+  <PageHead
+    title="Over Clarissa"
+    lead="Gediplomeerd pedicure, aangesloten bij ProVoet, en al jaren een vertrouwd adres aan het Goudenregenplein."
+    image={tip}
+    alt="Ingelijste certificaten en diploma's aan de muur van de salon."
+  />
+
+  <section class="section" aria-labelledby="verhaal">
+    <div class="wrap two-col">
+      <div class="prose">
+        <h2 id="verhaal">Haar verhaal</h2>
+        <p class="lead">
+          Sinds <span class="concept">[jaar]</span> verzorgt Clarissa handen en voeten aan het Goudenregenplein in Den Haag.
+        </p>
+        <p>
+          <span class="concept">[Opleiding en diploma's, bijvoorbeeld: Clarissa haalde haar diploma pedicure in [jaar] en volgde daarna
+          [cursus].]</span>
+        </p>
+        <p><span class="concept">[Waarom Clarissa dit werk doet, in een paar zinnen in haar eigen woorden.]</span></p>
+        <p>
+          Veel klanten komen al jaren. Je wacht in een van de rieten stoelen, met een tijdschrift of een boek uit de kast, en gaat met
+          lichte voeten weer naar huis.
+        </p>
+      </div>
+      <figure class="photo">
+        <div class="photo__frame">
+          <Image
+            src={wachtkamer}
+            alt="De wachtkamer: twee rieten stoelen met kussens, een grijze bank, een glazen salontafel met tijdschriften en een boekenkast met een Boeddhabeeld."
+            widths={[480, 800, 1200, 1600]}
+            sizes="(min-width: 64rem) 36rem, 100vw"
+            loading="lazy"
+          />
+        </div>
+        <figcaption>De wachtkamer.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--blos" aria-labelledby="provoet">
+    <div class="wrap two-col">
+      <div class="prose">
+        <h2 id="provoet">Gediplomeerd en aangesloten bij ProVoet</h2>
+        <p>
+          Aan de muur van de salon hangen Clarissa's certificaten en diploma's. Clarissa Body &amp; Style is ingeschreven bij ProVoet,
+          de landelijke brancheorganisatie voor pedicures. ProVoet-pedicures staan voor kwaliteit en hygiëne.
+        </p>
+        <p><a href="/certificering">Meer over de ProVoet-certificering</a></p>
+      </div>
+      <figure class="photo">
+        <div class="photo__frame">
+          <Image src={certificaten} alt="Twaalf ingelijste certificaten, diploma's en een krantenartikel aan de muur." width={720} loading="lazy" />
+        </div>
+        <figcaption>De certificatenmuur in de salon.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <BookBlock />
+</Base>
+
+<style>
+  .two-col {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .two-col .lead {
+    margin-block: 1rem;
+  }
+  @media (min-width: 64rem) {
+    .two-col {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+  }
+</style>

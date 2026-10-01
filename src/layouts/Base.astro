@@ -1,0 +1,170 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import OpenStatus from '../components/OpenStatus.astro';
+import CallActions from '../components/CallActions.astro';
+import { salon, hours } from '../data/salon';
+
+type Page = 'home' | 'pedicure' | 'manicure' | 'aandoeningen' | 'over' | 'certificering' | 'contact' | 'none';
+
+interface Props {
+  title: string;
+  description: string;
+  page: Page;
+  theme?: 'lak';
+}
+
+const { title, description, page, theme } = Astro.props;
+const fullTitle = page === 'home' ? `${salon.name} | Pedicure en manicure in Den Haag` : `${title} | ${salon.name}`;
+const canonical = new URL(Astro.url.pathname, salon.url).href;
+
+const tabs = [
+  { href: '/', label: 'Thuis', icon: 'home', page: 'home' },
+  { href: '/pedicure', label: 'Pedicure', icon: 'foot', page: 'pedicure' },
+  { href: '/manicure', label: 'Manicure', icon: 'polish', page: 'manicure' },
+  { href: '/contact', label: 'Contact', icon: 'pin', page: 'contact' },
+] as const;
+
+const nav = [
+  { href: '/pedicure', label: 'Pedicure', page: 'pedicure' },
+  { href: '/manicure', label: 'Manicure', page: 'manicure' },
+  { href: '/aandoeningen', label: 'Voetklachten', page: 'aandoeningen' },
+  { href: '/over-clarissa', label: 'Over Clarissa', page: 'over' },
+  { href: '/contact', label: 'Contact', page: 'contact' },
+] as const;
+
+const dayCodes = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NailSalon',
+  name: salon.name,
+  url: salon.url,
+  telephone: '+31657666797',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: salon.street,
+    postalCode: salon.postcode,
+    addressLocality: salon.city,
+    addressCountry: 'NL',
+  },
+  openingHoursSpecification: hours
+    .filter((h) => h.open)
+    .map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: dayCodes[h.day], opens: h.open, closes: h.close })),
+  memberOf: { '@type': 'Organization', name: 'ProVoet' },
+};
+---
+
+<!doctype html>
+<html lang="nl" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#1a0817" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_NL" />
+    <script is:inline>
+      // De lakglans strijkt één keer per bezoek over de hero, niet bij elke terugkeer naar Thuis.
+      try {
+        if (sessionStorage.getItem('glans')) document.documentElement.classList.add('no-sheen');
+        sessionStorage.setItem('glans', '1');
+      } catch (e) {}
+    </script>
+    {page === 'home' && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#inhoud">Naar de inhoud</a>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="wordmark" href="/" aria-current={page === 'home' ? 'page' : undefined}>
+          <span class="wordmark__line">Clarissa</span> <span class="wordmark__line">Body &amp; Style</span>
+        </a>
+        <OpenStatus />
+      </div>
+    </header>
+
+    <main id="inhoud" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-footer lak">
+      <div class="wrap">
+        <p class="wordmark">{salon.name}</p>
+        <div class="footer-grid">
+          <div>
+            <h2 class="footer-title">Adres</h2>
+            <address>
+              {salon.street}<br />
+              {salon.postcode} {salon.city}<br />
+              <a href={salon.phoneHref}>{salon.phoneDisplay}</a>
+            </address>
+            <p><a href={salon.mapsHref} rel="noopener">Route plannen</a></p>
+            <p><a href="/contact#openingstijden">Openingstijden</a></p>
+          </div>
+          <nav aria-labelledby="f-paginas">
+            <h2 class="footer-title" id="f-paginas">Alle pagina's</h2>
+            <ul>
+              <li><a href="/">Thuis</a></li>
+              {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+              <li><a href="/certificering">ProVoet-certificering</a></li>
+            </ul>
+          </nav>
+          <div>
+            <h2 class="footer-title">Afzeggen</h2>
+            <p>{salon.cancellation}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <nav class="dock" aria-label="Hoofdmenu">
+      <ul>
+        {
+          tabs.map((t) => (
+            <li>
+              <a class="tab" href={t.href} aria-current={page === t.page ? 'page' : undefined}>
+                <span class="tab__icon">
+                  <Icon name={t.icon} />
+                </span>
+                {t.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a class="tab tab--action" href="/contact#afspraak" data-sheet-open>
+            <span class="tab__icon"><Icon name="calendar" /></span>
+            Afspraak
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <dialog class="sheet lak" id="afspraak-sheet" aria-labelledby="sheet-title">
+      <div class="sheet__grip" aria-hidden="true"></div>
+      <div class="sheet__head">
+        <h2 id="sheet-title">Afspraak maken</h2>
+        <button class="sheet__close" type="button" data-sheet-close>
+          <Icon name="close" />
+          Sluiten
+        </button>
+      </div>
+      <p>Bel of stuur een WhatsApp-bericht, en zeg erbij welke behandeling je wilt.</p>
+      <CallActions />
+      <p class="note">{salon.cancellation}</p>
+    </dialog>
+
+    <script>
+      import '../scripts/status';
+      import '../scripts/sheet';
+    </script>
+  </body>
+</html>

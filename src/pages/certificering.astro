@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import BookBlock from '../components/BookBlock.astro';
+import tip from '../assets/certificaten-tip.jpg';
+---
+
+<Base
+  page="certificering"
+  title="ProVoet-certificering"
+  description="Clarissa Body & Style is gediplomeerd en ingeschreven bij ProVoet, de landelijke brancheorganisatie voor pedicures."
+>
+  <PageHead
+    title="ProVoet"
+    lead="Clarissa Body & Style is gediplomeerd en ingeschreven bij brancheorganisatie ProVoet."
+    image={tip}
+    alt="Ingelijste certificaten en diploma's aan de muur van de salon."
+  />
+  <section class="section" aria-labelledby="wat">
+    <div class="wrap">
+      <div class="prose">
+        <h2 id="wat">Wat is ProVoet?</h2>
+        <p>
+          ProVoet is de landelijke brancheorganisatie voor pedicures en behartigt de belangen van ruim 13.000 (aspirant-)leden.
+          ProVoet bevordert de kwaliteit en professionalisering van voetverzorging en het beroep pedicure in Nederland.
+        </p>
+        <p>De pedicures die bij ProVoet zijn aangesloten staan voor kwaliteit en hygiëne. Je herkent ze aan het ProVoet-logo.</p>
+        <p><a href="https://www.provoet.nl" rel="noopener">Naar de website van ProVoet</a></p>
+      </div>
+    </div>
+  </section>
+  <BookBlock />
+</Base>
+
+<style>
+  .prose h2 {
+    margin-bottom: 1rem;
+  }
+</style>

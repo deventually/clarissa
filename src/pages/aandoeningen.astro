@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import BookBlock from '../components/BookBlock.astro';
+import { Image } from 'astro:assets';
+import { conditions } from '../data/salon';
+import hielkloven from '../assets/hielkloven.jpg';
+import likdoorns from '../assets/likdoorns.jpg';
+import teennagel from '../assets/ingroeiende-teennagel.jpg';
+
+const photos = {
+  hielkloven: { src: hielkloven, alt: 'Een hiel met droge, gebarsten huid.' },
+  likdoorns: { src: likdoorns, alt: 'Een likdoorn: een ronde, eeltige verdikking op een teen.' },
+  'ingroeiende-teennagel': { src: teennagel, alt: 'Een grote teen met een nagelbeugel op de nagel.' },
+} as const;
+---
+
+<Base
+  page="aandoeningen"
+  title="Voetklachten"
+  description="Hielkloven, likdoorns en ingroeiende teennagels: hoe je ze herkent, waar ze vandaan komen en hoe Clarissa ze verzorgt."
+>
+  <PageHead
+    title="Voetklachten"
+    lead="Drie klachten die Clarissa vaak ziet: hoe je ze herkent, waar ze vandaan komen en wat eraan te doen is."
+    lak={['#c47bb6', '#5e2155']}
+  >
+    <nav class="toc" aria-label="Op deze pagina">
+      <ul>
+        {conditions.map((c) => <li><a href={`#${c.id}`}>{c.name}</a></li>)}
+      </ul>
+    </nav>
+  </PageHead>
+
+  {
+    conditions.map((c, i) => (
+      <section class:list={['section', { 'section--blos': i % 2 === 1 }]} aria-labelledby={c.id}>
+        <div class="wrap condition">
+          <figure class="photo condition__photo">
+            <div class="photo__frame">
+              <Image src={photos[c.id].src} alt={photos[c.id].alt} width={200} loading="lazy" />
+            </div>
+          </figure>
+          <div class="prose">
+            <h2 id={c.id}>{c.name}</h2>
+            <p class="lead">{c.intro}</p>
+            <h3>Oorzaken</h3>
+            <p>{c.causes}</p>
+            <h3>Verzorging</h3>
+            <p>{c.care}</p>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <BookBlock heading="Herken je dit?" />
+</Base>
+
+<style>
+  .toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+  }
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: var(--t-s);
+    font-weight: 500;
+    color: var(--op-lak);
+    text-decoration: none;
+    background: rgb(255 255 255 / 0.08);
+    box-shadow: inset 0 0 0 1px var(--glas-rand);
+  }
+  .toc a:hover {
+    background: rgb(255 255 255 / 0.16);
+  }
+  .condition {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .condition__photo {
+    width: 10rem;
+  }
+  .condition .lead {
+    margin-block: 1rem 0.5rem;
+  }
+  @media (min-width: 64rem) {
+    .condition {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: 4rem;
+    }
+    .condition__photo {
+      width: 100%;
+      padding-top: 0.75rem;
+    }
+  }
+</style>

@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import Nail from '../components/Nail.astro';
+import CallActions from '../components/CallActions.astro';
+import Hours from '../components/Hours.astro';
+import BookBlock from '../components/BookBlock.astro';
+import { Image } from 'astro:assets';
+import { salon, pedicure, manicure } from '../data/salon';
+
+import stoel from '../assets/stoel.jpg';
+import pedicureTip from '../assets/pedicure-tip.jpg';
+import manicureTip from '../assets/manicure-tip.jpg';
+import certificatenTip from '../assets/certificaten-tip.jpg';
+import wachtkamerTip from '../assets/wachtkamer-tip.jpg';
+import werkkamer from '../assets/werkkamer.jpg';
+
+// Het tiprek: zoals de gelakte nageltips in de salon, één tip per onderwerp.
+const tips = [
+  { href: '/pedicure', name: 'Pedicure', meta: `${pedicure.length} behandelingen`, src: pedicureTip },
+  { href: '/manicure', name: 'Manicure', meta: `${manicure.length} behandelingen, ook gellak`, src: manicureTip },
+  { href: '/aandoeningen', name: 'Voetklachten', meta: 'Herkennen en verzorgen', lak: ['#c47bb6', '#5e2155'] as [string, string] },
+  { href: '/over-clarissa', name: 'Over Clarissa', meta: 'Gediplomeerd, lid van ProVoet', src: certificatenTip },
+  { href: '/contact', name: 'De salon', meta: salon.street, src: wachtkamerTip },
+];
+---
+
+<Base
+  page="home"
+  title="Thuis"
+  description="Pedicure en manicure bij Clarissa aan het Goudenregenplein in Den Haag. Aangesloten bij ProVoet. Bel of app voor een afspraak: 06 57 666 797."
+>
+  <section class="hero lak" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <h1 id="hero-title" class="hero__title">Tot in de puntjes verzorgd.</h1>
+      <div class="hero__nail">
+        <Nail
+          src={stoel}
+          alt="De roze behandelstoel in de salon, met zebrakussens en een witte handdoek."
+          sizes="(min-width: 64rem) 28rem, 40vw"
+          sheen
+          eager
+        />
+      </div>
+      <div class="hero__body">
+        <p class="lead">Pedicure en manicure bij Clarissa, aan het Goudenregenplein in Den Haag.</p>
+        <CallActions />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tips-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="tips-title">Behandelingen en de salon</h2>
+        <p>Prijzen, uitleg over voetklachten en alles over Clarissa.</p>
+      </div>
+    </div>
+    <ul class="tips" role="list">
+      {
+        tips.map((t) => (
+          <li>
+            <a class="tip" href={t.href}>
+              <Nail src={t.src} lak={t.lak} sizes="(min-width: 64rem) 13rem, 42vw" class="tip__nail" />
+              <span class="tip__name">{t.name}</span>
+              <span class="tip__meta">{t.meta}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section section--blos" aria-labelledby="welkom">
+    <div class="wrap welcome">
+      <div class="welcome__text">
+        <h2 id="welkom">Dag vermoeide voeten. Welkom, verzorgde nagels.</h2>
+        <p class="lead welcome__lead">
+          Geef je voeten de aandacht die ze verdienen: van gezonde voeten word je vrolijk, en je dag wordt er relaxter van.
+        </p>
+        <p>
+          Verwen jezelf, en geef je handen en voeten de finishing touch die je mooi en verzorgd maakt. Clarissa Body &amp; Style
+          is aangesloten bij ProVoet, de organisatie die kwaliteit en hygiëne in de voetverzorging bevordert.
+        </p>
+        <p class="signature">Clarissa</p>
+        <p><a href="/over-clarissa">Meer over Clarissa</a></p>
+      </div>
+      <figure class="photo welcome__photo">
+        <div class="photo__frame">
+          <Image
+            src={werkkamer}
+            alt="De behandelkamer: de roze stoel, een kruk, een rek met gelakte nageltips en een schilderij van een magnolia."
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 64rem) 36rem, 100vw"
+            loading="lazy"
+          />
+        </div>
+        <figcaption>De behandelkamer, met het rek vol gelakte nageltips.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="openingstijden">
+    <div class="wrap split">
+      <div>
+        <h2 id="openingstijden">Openingstijden</h2>
+        <p class="split__sub">
+          {salon.street}, {salon.city}. Tram 12 en RandstadRail 3 stoppen vlakbij, en parkeren is tot 18:00 gratis.
+        </p>
+        <p><a href="/contact">Route en parkeren</a></p>
+      </div>
+      <div class="card">
+        <Hours />
+      </div>
+    </div>
+  </section>
+
+  <BookBlock />
+</Base>
+
+<style>
+  /* hero: titel en nagel naast elkaar, op elk scherm */
+  .hero {
+    padding-block: 1.75rem 2.75rem;
+    overflow: hidden;
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      'title nail'
+      'body body';
+    column-gap: 1rem;
+    row-gap: 1.75rem;
+    align-items: center;
+  }
+  .hero__title {
+    grid-area: title;
+    font-size: clamp(2.6rem, 1rem + 7vw, 7rem);
+    line-height: 0.98;
+  }
+  .hero__nail {
+    grid-area: nail;
+    position: relative;
+    transform: rotate(-5deg);
+  }
+  .hero__nail::before {
+    content: '';
+    position: absolute;
+    inset: 10% -20% -10%;
+    background: radial-gradient(closest-side, rgb(224 85 154 / 0.45), transparent);
+    filter: blur(20px);
+  }
+  .hero__body {
+    grid-area: body;
+  }
+  .hero__body .lead {
+    margin-bottom: 1.5rem;
+  }
+
+  /* het tiprek: scrollt opzij op mobiel, staat in één rij op groot scherm */
+  .tips {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(9.5rem, 42vw);
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem max(var(--gutter), env(safe-area-inset-left)) 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .tips::-webkit-scrollbar {
+    display: none;
+  }
+  .tips li {
+    scroll-snap-align: start;
+  }
+  .tip {
+    display: grid;
+    gap: 0.2rem;
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--r-l);
+  }
+  .tip :global(.tip__nail) {
+    margin-bottom: 0.9rem;
+    transition: transform 260ms var(--ease);
+  }
+  .tip:hover :global(.tip__nail) {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+  .tip__name {
+    font-size: var(--t-h3);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .tip:hover .tip__name {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .tip__meta {
+    font-size: var(--t-s);
+    color: var(--inkt-zacht);
+  }
+
+  .welcome {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .welcome__text h2 {
+    margin-bottom: 1.25rem;
+  }
+  .welcome__lead {
+    margin-bottom: 1rem;
+  }
+
+  .split {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .split h2 {
+    margin-bottom: 0.75rem;
+  }
+  .split__sub {
+    color: var(--inkt-zacht);
+    max-width: 30rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    .hero {
+      padding-block: 3rem 4rem;
+    }
+    .hero__grid {
+      column-gap: 3rem;
+    }
+    .split {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .hero {
+      padding-block: 4rem 5.5rem;
+    }
+    .hero__grid {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      grid-template-areas:
+        'title nail'
+        'body nail';
+      column-gap: 5rem;
+      row-gap: 2.5rem;
+    }
+    .hero__title {
+      align-self: end;
+    }
+    .hero__body {
+      align-self: start;
+    }
+    .hero__nail {
+      max-width: 28rem;
+      justify-self: center;
+      width: 100%;
+    }
+    .tips {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(5, 1fr);
+      max-width: var(--page);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+      overflow: visible;
+      gap: 1.75rem;
+    }
+    .welcome {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 5rem;
+    }
+  }
+</style>

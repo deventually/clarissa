@@ -1,0 +1,21 @@
+---
+import { euro, type Treatment } from '../data/salon';
+interface Props {
+  items: Treatment[];
+}
+const { items } = Astro.props;
+---
+
+<ul class="menu">
+  {
+    items.map((t) => (
+      <li>
+        <div class="menu__row">
+          <h3>{t.name}</h3>
+          <span class="menu__price">{euro(t.price)}</span>
+        </div>
+        {t.description && <p>{t.description}</p>}
+      </li>
+    ))
+  }
+</ul>

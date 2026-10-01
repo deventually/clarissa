@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+import { salon } from '../data/salon';
+---
+
+<div class="actions">
+  <a class="button button--primary" href={salon.phoneHref}>
+    <Icon name="phone" />
+    <span class="button__label">Bel Clarissa<span class="button__sub">{salon.phoneDisplay}</span></span>
+  </a>
+  <a class="button button--glass" href={salon.whatsappHref} rel="noopener">
+    <Icon name="chat" />
+    <span class="button__label">WhatsApp<span class="button__sub">Stuur een bericht</span></span>
+  </a>
+</div>
