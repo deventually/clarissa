@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- GitHub Pages toont voor elk onbekend adres alleen de 404.html in de root. Deze stuurt door:
+     - binnen een versie (/clarissa/v1/…, /clarissa/v2/…) naar de eigen 404-pagina van die versie;
+     - oude adressen van voor de splitsing (/clarissa/pedicure) naar dezelfde pagina in versie 1. -->
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Pagina niet gevonden</title>
+    <script>
+      var root = '/clarissa/';
+      var pad = location.pathname.indexOf(root) === 0 ? location.pathname.slice(root.length) : '';
+      var versie = pad.match(/^(v1|v2)(\/|$)/);
+      location.replace(versie ? root + versie[1] + '/404' : root + 'v1/' + pad + location.search + location.hash);
+    </script>
+  </head>
+  <body>
+    <p><a href="/clarissa/">Naar de proefversies</a></p>
+  </body>
+</html>

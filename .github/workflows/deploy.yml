@@ -1,12 +1,16 @@
-# Bouwt de site bij elke push naar main en zet hem op GitHub Pages.
-# Proefversie: https://deventually.github.io/clarissa (met noindex, zie Base.astro).
-# Overstappen naar het eigen domein: SITE en BASE_PATH hieronder weghalen, een CNAME-bestand met
-# clarissa-bodyandstyle.nl in /public zetten en de DNS bij de domeinprovider naar GitHub Pages laten wijzen.
+# Bouwt bij elke push naar main of v2 béíde proefversies en zet ze samen op GitHub Pages:
+#   https://deventually.github.io/clarissa/     keuzepagina (.github/pages/index.html, van main)
+#   https://deventually.github.io/clarissa/v1/  branch main
+#   https://deventually.github.io/clarissa/v2/  branch v2
+# Dit bestand moet op beide branches gelijk zijn: GitHub gebruikt de versie van de branch waarnaar
+# gepusht wordt. Beide versies hebben noindex (zie Base.astro).
+# Overstappen naar het eigen domein: de gekozen versie bouwen zonder SITE en BASE_PATH, een
+# CNAME-bestand met clarissa-bodyandstyle.nl in /public zetten en de DNS naar GitHub Pages laten wijzen.
 name: Deploy naar GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, v2]
   workflow_dispatch:
 
 permissions:
@@ -23,18 +27,41 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SITE: https://deventually.github.io
-      BASE_PATH: /clarissa
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: v1
+      - uses: actions/checkout@v4
+        with:
+          ref: v2
+          path: v2
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npm run build
+          cache-dependency-path: |
+            v1/package-lock.json
+            v2/package-lock.json
+      - name: Versie 1 bouwen (main)
+        working-directory: v1
+        env:
+          BASE_PATH: /clarissa/v1
+        run: npm ci && npm run build
+      - name: Versie 2 bouwen (v2)
+        working-directory: v2
+        env:
+          BASE_PATH: /clarissa/v2
+        run: npm ci && npm run build
+      - name: Samenvoegen
+        run: |
+          mkdir site
+          cp v1/.github/pages/index.html v1/.github/pages/404.html site/
+          cp -r v1/dist site/v1
+          cp -r v2/dist site/v2
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build

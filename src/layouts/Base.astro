@@ -42,6 +42,10 @@ const nav = [
   { href: url('/contact'), label: 'Contact', page: 'contact' },
 ] as const;
 
+// De tabbalk op mobiel: 'zwevend' (een glazen eiland boven de onderrand) of 'vast' (over de volle
+// breedte tegen de onderrand). Versie 1 (branch main) zweeft, versie 2 (branch v2) ligt vast.
+const dock: 'zwevend' | 'vast' = 'zwevend';
+
 const dayCodes = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -64,7 +68,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="nl" data-theme={theme}>
+<html lang="nl" data-theme={theme} data-dock={dock}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -87,14 +91,6 @@ const jsonLd = {
         if (sessionStorage.getItem('glans')) document.documentElement.classList.add('no-sheen');
         sessionStorage.setItem('glans', '1');
       } catch (e) {}
-      // Twee varianten van de tabbalk op mobiel, om aan de opdrachtgever voor te leggen:
-      // ?dock=zwevend (standaard) of ?dock=vast. De keuze blijft bewaard tot je weer wisselt.
-      try {
-        var dock = new URLSearchParams(location.search).get('dock');
-        if (dock === 'vast' || dock === 'zwevend') localStorage.setItem('dock', dock);
-        else dock = localStorage.getItem('dock');
-      } catch (e) {}
-      document.documentElement.dataset.dock = dock === 'vast' ? 'vast' : 'zwevend';
     </script>
     {page === 'home' && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
@@ -159,14 +155,6 @@ const jsonLd = {
             <p>{salon.cancellation}</p>
           </div>
         </div>
-        {
-          proefversie && (
-            <p class="variant-keuze">
-              Proefversie · tabbalk op mobiel: <a href="?dock=zwevend" data-variant="zwevend">zwevend</a> ·{' '}
-              <a href="?dock=vast" data-variant="vast">vast onderaan</a>
-            </p>
-          )
-        }
       </div>
     </footer>
 
