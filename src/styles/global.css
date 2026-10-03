@@ -393,7 +393,7 @@ main:focus {
 }
 
 /* Variant 'vast': de tabbalk ligt onderaan tegen de rand, over de volle breedte, zoals een
-   tabbalk in een app. Gekozen met de constante `dock` in Base.astro. Dezelfde tabs, dezelfde lak;
+   tabbalk in een app. Ingesteld per versie in src/versie.ts. Dezelfde tabs, dezelfde lak;
    alleen de vorm verandert: geen ronding, een lichtnaad bovenlangs en ruimte voor de home-balk. */
 :root[data-dock='vast'] {
   --dock-gap: 0rem;

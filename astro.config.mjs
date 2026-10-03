@@ -9,6 +9,8 @@ export default defineConfig({
   build: { format: 'file' },
   trailingSlash: 'never',
   devToolbar: { enabled: false },
+  // welke proefversie er gebouwd wordt (1 of 2), zie src/versie.ts
+  vite: { define: { 'import.meta.env.VERSIE': JSON.stringify(process.env.VERSIE ?? '1') } },
   // dev- en preview-server luisteren op alle netwerkadressen, zodat je de site ook op je telefoon
   // of tablet in hetzelfde wifi-netwerk kunt openen (het adres staat bij het starten onder 'Network')
   server: { host: true, port: 4321 },

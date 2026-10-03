@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "dev:v2": "VERSIE=2 astro dev --port 4322",
     "build": "astro build",
     "preview": "astro preview",
     "a11y": "node tools/a11y.mjs",

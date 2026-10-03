@@ -5,6 +5,7 @@ import Icon from '../components/Icon.astro';
 import OpenStatus from '../components/OpenStatus.astro';
 import CallActions from '../components/CallActions.astro';
 import { salon, hours } from '../data/salon';
+import { versie } from '../versie';
 
 type Page = 'home' | 'pedicure' | 'manicure' | 'aandoeningen' | 'over' | 'certificering' | 'contact' | 'none';
 
@@ -42,10 +43,6 @@ const nav = [
   { href: url('/contact'), label: 'Contact', page: 'contact' },
 ] as const;
 
-// De tabbalk op mobiel: 'zwevend' (een glazen eiland boven de onderrand) of 'vast' (over de volle
-// breedte tegen de onderrand). Versie 1 (branch main) zweeft, versie 2 (branch v2) ligt vast.
-const dock: 'zwevend' | 'vast' = 'zwevend';
-
 const dayCodes = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -68,7 +65,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="nl" data-theme={theme} data-dock={dock}>
+<html lang="nl" data-theme={theme} data-versie={versie.nummer} data-dock={versie.dock}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
