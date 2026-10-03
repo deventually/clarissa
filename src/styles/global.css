@@ -65,6 +65,9 @@
     linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 0.045) 46%, transparent 54%),
     linear-gradient(165deg, var(--lak-700) 0%, var(--lak-900) 55%, var(--lak-950) 100%);
   --glas-donker: rgb(28 8 25 / 0.94);
+  /* bijna dicht: header en vaste tabbalk. Er kleurt nog een zweem van wat eronder schuift door,
+     maar tekst schemert niet meer door (dat leidde af en oogde rommelig) */
+  --glas-dicht: rgb(28 8 25 / 0.985);
 
   /* fuchsia lak: de Bel-knop, de actieve tab, het label 'vandaag' en de speld op de kaart */
   --lak-fuchsia: linear-gradient(180deg, #c93582 0%, #b3216d 100%);
@@ -233,7 +236,7 @@ main:focus {
   top: 0;
   z-index: 20;
   view-transition-name: header;
-  background: var(--glas-donker);
+  background: var(--glas-dicht);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   box-shadow: inset 0 -1px 0 var(--glas-rand);
@@ -407,6 +410,7 @@ main:focus {
   --dock-gap: 0rem;
 }
 [data-dock='vast'] .dock {
+  background: var(--glas-dicht);
   left: 0;
   right: 0;
   bottom: 0;
@@ -1135,6 +1139,7 @@ main {
 @media (prefers-reduced-transparency: reduce) {
   :root {
     --glas-donker: var(--lak-900);
+    --glas-dicht: var(--lak-900);
   }
 }
 
