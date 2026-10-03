@@ -1,7 +1,8 @@
 // Twee proefversies uit dezelfde code, om aan de opdrachtgever voor te leggen. Alles wat hier niet
 // staat (inhoud, bugfixes, nieuwe functies) is gedeeld en komt vanzelf in allebei.
 // Welke versie er gebouwd wordt, bepaalt VERSIE bij het bouwen: `npm run dev` is versie 1,
-// `npm run dev:v2` versie 2. De deploy bouwt ze allebei (.github/workflows/deploy.yml).
+// `npm run dev:v2` versie 2, `npm run dev:beide` allebei (met een wisselknopje rechtsboven).
+// De deploy bouwt ze allebei (.github/workflows/deploy.yml).
 //
 // Een verschil toevoegen:
 // - een instelling hieronder, die je in de code uitleest via `versie.<naam>`;

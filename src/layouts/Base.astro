@@ -6,6 +6,7 @@ import OpenStatus from '../components/OpenStatus.astro';
 import CallActions from '../components/CallActions.astro';
 import { salon, hours } from '../data/salon';
 import { versie } from '../versie';
+import DevVersies from '../components/DevVersies.astro';
 
 type Page = 'home' | 'pedicure' | 'manicure' | 'aandoeningen' | 'over' | 'certificering' | 'contact' | 'none';
 
@@ -191,6 +192,8 @@ const jsonLd = {
       <CallActions />
       <p class="note">{salon.cancellation}</p>
     </dialog>
+
+    {import.meta.env.DEV && <DevVersies />}
 
     <script>
       import '../scripts/status';

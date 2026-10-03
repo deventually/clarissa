@@ -1,0 +1,49 @@
+---
+// Alleen tijdens het ontwikkelen: wisselen tussen versie 1 en 2 op dezelfde pagina.
+// Elke versie draait op een eigen poort (npm run dev:beide start ze samen, zie tools/dev-beide.mjs).
+import { versie } from '../versie';
+
+const poorten = { 1: 4321, 2: 4322 } as const;
+---
+
+<nav class="dev-versies" aria-label="Versie (alleen lokaal)">
+  {
+    ([1, 2] as const).map((n) => (
+      <a href={`http://localhost:${poorten[n]}/`} data-poort={poorten[n]} aria-current={versie.nummer === n ? 'page' : undefined}>
+        v{n}
+      </a>
+    ))
+  }
+</nav>
+
+<script is:inline>
+  // dezelfde pagina, hash en zoekterm in de andere versie
+  document.querySelectorAll('.dev-versies [data-poort]').forEach(function (a) {
+    a.href = location.protocol + '//' + location.hostname + ':' + a.dataset.poort + location.pathname + location.search + location.hash;
+  });
+</script>
+
+<style>
+  .dev-versies {
+    position: fixed;
+    top: calc(var(--header-h) + env(safe-area-inset-top) + 0.5rem);
+    right: 0.5rem;
+    z-index: 40;
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 999px;
+    background: rgb(18 5 15 / 0.85);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.2);
+    font: 600 0.75rem/1 system-ui, sans-serif;
+  }
+  .dev-versies a {
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    color: #fbeef4;
+    text-decoration: none;
+  }
+  .dev-versies a[aria-current='page'] {
+    background: #c9267a;
+  }
+</style>
