@@ -262,8 +262,28 @@ main:focus {
   text-decoration: none;
   padding-block: 0.5rem;
 }
-.wordmark__line {
+
+/* het logo van de gevel, linksboven in de header. Op een smalle telefoon mag het iets krimpen
+   (tot 8rem, dan is het handschrift nog leesbaar) om plaats te maken voor de openingsstatus. */
+.logo {
+  flex: 0 1 10rem;
+  min-width: 8rem;
   display: block;
+  padding-block: 0.6rem;
+}
+.logo img {
+  width: 100%;
+  height: auto;
+  /* een zweem schaduw: het logo ligt óp de lak, niet erin */
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.45));
+}
+
+/* op de smalste telefoons mag de status over twee regels, liever dan dat de pagina zijwaarts schuift */
+@media (max-width: 22rem) {
+  .site-header .status {
+    white-space: normal;
+    min-width: 0;
+  }
 }
 
 /* menu en Afspraak-knop in de header: alleen op een groot scherm, zie onderaan */
@@ -961,11 +981,8 @@ main {
     --gutter: 2rem;
     --dock-gap: 1.25rem;
   }
-  .wordmark {
-    font-size: 1.4rem;
-  }
-  .wordmark__line {
-    display: inline;
+  .logo {
+    flex-basis: 11rem;
   }
   .section {
     padding-block: 5rem;
@@ -1021,11 +1038,7 @@ main {
   .site-header__inner {
     gap: 1.5rem;
   }
-  .site-header .wordmark {
-    flex: none;
-    white-space: nowrap;
-  }
-  /* menu, openingsstatus en Afspraak passen samen pas vanaf 80rem naast het woordmerk */
+  /* menu, openingsstatus en Afspraak passen samen pas vanaf 80rem naast het logo */
   .site-header .status {
     display: none;
   }

@@ -31,8 +31,9 @@ export function openStatus(now = amsterdamNow()) {
   for (let k = 1; k <= 7; k++) {
     const next = byDay((now.day + k) % 7);
     if (next.open) {
-      const when = k === 1 ? 'Morgen' : next.name;
-      return { state: 'closed', text: `${when} open om ${next.open}` };
+      // kort, zoals 'Di–za vanaf 10:00' zonder JavaScript: de status staat op mobiel naast het logo
+      const when = k === 1 ? 'Morgen' : next.name[0].toUpperCase() + next.name[1];
+      return { state: 'closed', text: `${when} vanaf ${next.open}` };
     }
   }
   return { state: 'closed', text: 'gesloten' };
