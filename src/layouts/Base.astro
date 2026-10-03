@@ -98,7 +98,25 @@ const jsonLd = {
         <a class="wordmark" href={url('/')} aria-current={page === 'home' ? 'page' : undefined}>
           <span class="wordmark__line">Clarissa</span> <span class="wordmark__line">Body &amp; Style</span>
         </a>
+        <!-- op een groot scherm staat het menu hier; op mobiel en tablet neemt het dock het over -->
+        <nav class="site-nav" aria-label="Hoofdmenu">
+          <ul>
+            {
+              nav.map((n) => (
+                <li>
+                  <a href={n.href} aria-current={page === n.page ? 'page' : undefined}>
+                    {n.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
         <OpenStatus />
+        <a class="header-afspraak" href={url('/contact#afspraak')} data-sheet-open>
+          <Icon name="calendar" />
+          Afspraak
+        </a>
       </div>
     </header>
 

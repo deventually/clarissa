@@ -266,6 +266,12 @@ main:focus {
   display: block;
 }
 
+/* menu en Afspraak-knop in de header: alleen op een groot scherm, zie onderaan */
+.site-nav,
+.header-afspraak {
+  display: none;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -964,6 +970,112 @@ main {
   }
   .sheet[open] {
     animation: fade-in 220ms ease-out;
+  }
+}
+
+/* ---------- Laptop en desktop: het menu in de header, het dock verdwijnt ----------
+   Op een laptop staat een zwevende balk tegen de onderrand van het venster in de weg (en valt
+   daar soms buiten beeld); hier verwacht je het menu bovenin. */
+@media (min-width: 64rem) {
+  :root {
+    --dock-h: 0rem;
+    --dock-gap: 0rem;
+  }
+  .dock {
+    display: none;
+  }
+  .site-header__inner {
+    gap: 1.5rem;
+  }
+  .site-header .wordmark {
+    flex: none;
+    white-space: nowrap;
+  }
+  /* menu, openingsstatus en Afspraak passen samen pas vanaf 80rem naast het woordmerk */
+  .site-header .status {
+    display: none;
+  }
+  .site-nav {
+    display: block;
+    margin-left: auto;
+  }
+  .site-nav ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav a {
+    position: relative;
+    display: block;
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--op-lak-zacht);
+    text-decoration: none;
+    border-radius: 999px;
+  }
+  .site-nav a:hover {
+    color: var(--op-lak);
+  }
+  .site-nav a:focus-visible {
+    outline-color: var(--roze);
+    outline-offset: 0;
+  }
+  .site-nav a[aria-current='page'] {
+    color: var(--op-lak);
+  }
+  /* het actieve item: een lakstreepje eronder, dat met de paginaovergang meeschuift */
+  .site-nav a[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    height: 3px;
+    border-radius: 3px;
+    view-transition-name: nav-streep;
+    background: linear-gradient(90deg, var(--fuchsia), var(--roze));
+  }
+  .header-afspraak {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 1.1rem 0.4rem 0.85rem;
+    font-size: var(--t-s);
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px;
+    background: var(--lak-glans), var(--lak-fuchsia);
+    box-shadow:
+      var(--lak-rand),
+      0 8px 18px -10px rgb(0 0 0 / 0.7);
+    transition:
+      transform 160ms var(--ease),
+      filter 160ms;
+  }
+  .header-afspraak svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .header-afspraak:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+  .header-afspraak:focus-visible {
+    outline-color: var(--roze);
+  }
+}
+@media (min-width: 80rem) {
+  .site-header .status {
+    display: inline-flex;
   }
 }
 
