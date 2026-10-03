@@ -9,7 +9,10 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  color-scheme: light;
+  /* 'only' verbiedt de browser de site zelf donker te kleuren (Samsung Internet doet dat in
+     energiebesparingsmodus en bij systeembreed donker thema). Zonder 'only' werd de lichte
+     parelmoerglans achter de hero-kop donker gemaakt, en daarmee de kop zelf onleesbaar. */
+  color-scheme: only light;
 
   /* lak: de donkere, glanzende vlakken */
   --lak-950: #12050f;
