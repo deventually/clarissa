@@ -392,6 +392,40 @@ main:focus {
   color: var(--op-lak);
 }
 
+/* Variant 'vast': de tabbalk ligt onderaan tegen de rand, over de volle breedte, zoals een
+   tabbalk in een app. Kiezen via ?dock=vast, zie Base.astro. Dezelfde tabs, dezelfde lak;
+   alleen de vorm verandert: geen ronding, een lichtnaad bovenlangs en ruimte voor de home-balk. */
+:root[data-dock='vast'] {
+  --dock-gap: 0rem;
+}
+[data-dock='vast'] .dock {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  transform: none;
+  border-radius: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -16px 32px -20px rgb(18 5 15 / 0.45);
+}
+[data-dock='vast'] .dock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(246 169 203 / 0.45) 25%, rgb(246 169 203 / 0.45) 75%, transparent);
+}
+[data-dock='vast'] .dock ul {
+  max-width: 30rem;
+  margin-inline: auto;
+  padding: 0.35rem max(0.4rem, env(safe-area-inset-left)) 0.4rem max(0.4rem, env(safe-area-inset-right));
+}
+[data-dock='vast'] .site-footer {
+  padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom) + 3rem);
+}
+
 main {
   display: block;
 }
@@ -796,6 +830,22 @@ main {
   right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgb(246 169 203 / 0.4) 30%, rgb(246 169 203 / 0.4) 70%, transparent);
+}
+/* alleen op de proefversie: wisselen tussen de twee tabbalken */
+.variant-keuze {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--glas-rand);
+  font-size: var(--t-s);
+}
+.variant-keuze a {
+  font-weight: 500;
+}
+[data-dock='zwevend'] .variant-keuze [data-variant='zwevend'],
+[data-dock='vast'] .variant-keuze [data-variant='vast'] {
+  color: var(--op-lak);
+  text-decoration: none;
+  pointer-events: none;
 }
 .site-footer .wordmark {
   display: inline-block;

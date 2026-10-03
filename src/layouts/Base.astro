@@ -87,6 +87,14 @@ const jsonLd = {
         if (sessionStorage.getItem('glans')) document.documentElement.classList.add('no-sheen');
         sessionStorage.setItem('glans', '1');
       } catch (e) {}
+      // Twee varianten van de tabbalk op mobiel, om aan de opdrachtgever voor te leggen:
+      // ?dock=zwevend (standaard) of ?dock=vast. De keuze blijft bewaard tot je weer wisselt.
+      try {
+        var dock = new URLSearchParams(location.search).get('dock');
+        if (dock === 'vast' || dock === 'zwevend') localStorage.setItem('dock', dock);
+        else dock = localStorage.getItem('dock');
+      } catch (e) {}
+      document.documentElement.dataset.dock = dock === 'vast' ? 'vast' : 'zwevend';
     </script>
     {page === 'home' && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
@@ -151,6 +159,14 @@ const jsonLd = {
             <p>{salon.cancellation}</p>
           </div>
         </div>
+        {
+          proefversie && (
+            <p class="variant-keuze">
+              Proefversie · tabbalk op mobiel: <a href="?dock=zwevend" data-variant="zwevend">zwevend</a> ·{' '}
+              <a href="?dock=vast" data-variant="vast">vast onderaan</a>
+            </p>
+          )
+        }
       </div>
     </footer>
 
