@@ -89,7 +89,7 @@ const tips = [
     <div class="wrap welcome">
       <div class="welcome__text">
         <p class="eyebrow">Welkom</p>
-        <h2 id="welkom">Dag vermoeide voeten. Welkom, verzorgde nagels.</h2>
+        <h2 id="welkom">Dag vermoeide voeten. <span class="kern-w">W</span>elkom, verzorgde nagels.</h2>
         <p class="lead welcome__lead">
           Geef je voeten de aandacht die ze verdienen: van gezonde voeten word je vrolijk, en je dag wordt er relaxter van.
         </p>
@@ -104,7 +104,7 @@ const tips = [
         <div class="photo__frame">
           <Image
             src={werkkamer}
-            alt="De behandelkamer: de roze stoel, een kruk, een rek met gelakte nageltips en een schilderij van een magnolia."
+            alt="De behandelkamer: de roze stoel met zebrakussens, een rek met gelakte nageltips, een kopje koffie en een schilderij van een magnolia."
             widths={[480, 800, 1200]}
             sizes="(min-width: 64rem) 36rem, 100vw"
             loading="lazy"
@@ -165,13 +165,6 @@ const tips = [
     position: relative;
     transform: rotate(-5deg);
   }
-  .hero__nail::before {
-    content: '';
-    position: absolute;
-    inset: 10% -20% -10%;
-    background: radial-gradient(closest-side, rgb(224 85 154 / 0.45), transparent);
-    filter: blur(20px);
-  }
   .hero__body {
     grid-area: body;
   }
@@ -228,12 +221,18 @@ const tips = [
     text-decoration: none;
     border-radius: var(--r-l);
   }
+  /* het tiprek: een rustige boog in plaats van vijf glanzende nagels naast elkaar; de nagelvorm
+     met lakglans blijft voor de grote foto's (hero en paginakoppen) */
   .tip :global(.tip__nail) {
     margin-bottom: 0.9rem;
+    border-radius: 50% 50% var(--r-s) var(--r-s) / 37.5% 37.5% var(--r-s) var(--r-s);
     transition: transform 260ms var(--ease);
   }
+  .tip :global(.tip__nail)::after {
+    display: none;
+  }
   .tip:hover :global(.tip__nail) {
-    transform: translateY(-6px) rotate(-2deg);
+    transform: translateY(-4px);
   }
   .tip__name {
     display: inline-flex;

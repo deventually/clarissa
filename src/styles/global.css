@@ -138,6 +138,12 @@ h3 {
   margin: 0;
 }
 
+/* Bodoni Moda heeft geen kerning voor de W: 'We' en 'Wa' staan te ver uit elkaar ('W elkom').
+   Een W aan het begin van een woord in een kop krijgt daarom met de hand wat minder ruimte. */
+.kern-w {
+  letter-spacing: -0.09em;
+}
+
 p {
   margin: 0;
   text-wrap: pretty;
@@ -523,10 +529,10 @@ main {
   aspect-ratio: 3 / 4;
   border-radius: 50% 50% 46% 46% / 40% 40% 22% 22%;
   background: var(--lak-800);
+  /* een zachte, neutrale schaduw; de roze gloed eronder is weg (rustiger, chiquer) */
   box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / 0.18),
-    0 30px 60px -24px rgb(201 38 122 / 0.55),
-    0 12px 24px -12px rgb(18 5 15 / 0.5);
+    0 22px 44px -26px rgb(18 5 15 / 0.55);
 }
 .nail img {
   width: 100%;
@@ -686,38 +692,45 @@ main {
     0 24px 48px -28px rgb(90 20 70 / 0.35);
 }
 
-/* prijslijst */
+/* prijslijst, als de prijskaart van een salon: behandeling en prijs op één regel met een
+   stippellijn ertussen, de uitleg eronder, en de prijs rustig in de tekstkleur */
 .menu {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .menu li {
-  padding-block: 1.15rem;
+  padding-block: 1.25rem;
 }
 .menu li + li {
   border-top: 1px solid var(--lijn);
 }
 .menu__row {
   display: flex;
-  flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 0.25rem 1rem;
+  /* loopt de naam over twee regels, dan staan stippels en prijs bij de laatste regel */
+  align-items: last baseline;
+  gap: 0.5rem;
 }
 .menu__row h3 {
-  flex: 1 1 12rem;
+  flex: 0 1 auto;
   min-width: 0;
+}
+/* een lege span: zijn onderrand ligt op de basislijn, dus de stippels lopen gelijk met de tekst */
+.menu__leader {
+  flex: 1 1 1rem;
+  min-width: 1rem;
+  border-bottom: 2px dotted rgb(42 13 38 / 0.28);
 }
 .menu__price {
   font-size: var(--t-h3);
-  font-weight: 600;
+  font-weight: 500;
   font-variant-numeric: lining-nums tabular-nums;
   white-space: nowrap;
-  color: var(--fuchsia-tekst);
+  color: var(--inkt);
 }
 .menu p {
-  margin-top: 0.3rem;
+  margin-top: 0.35rem;
   color: var(--inkt-zacht);
   max-width: var(--measure);
 }
@@ -778,7 +791,7 @@ main {
   color: var(--op-lak);
 }
 
-/* foto in een glanzend lijstje */
+/* foto met afgeronde hoeken: geen glans erover, de foto mag voor zich spreken */
 .photo {
   margin: 0;
 }
@@ -786,7 +799,7 @@ main {
   position: relative;
   overflow: hidden;
   border-radius: var(--r-l);
-  box-shadow: 0 30px 60px -30px rgb(90 20 70 / 0.5);
+  box-shadow: 0 18px 36px -26px rgb(42 13 38 / 0.45);
 }
 .photo__frame img {
   width: 100%;
@@ -798,7 +811,6 @@ main {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.16) 40%, transparent 52%);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35);
 }
 .photo figcaption {
@@ -866,6 +878,14 @@ main {
 .site-footer li a {
   display: inline-block;
   padding-block: 0.3rem;
+}
+/* een rij onderstreepte links oogt druk: onderstrepen alleen bij aanwijzen of focus */
+.site-footer a:not(.button) {
+  text-decoration: none;
+}
+.site-footer a:not(.button):hover,
+.site-footer a:not(.button):focus-visible {
+  text-decoration: underline;
 }
 .site-footer address {
   font-style: normal;

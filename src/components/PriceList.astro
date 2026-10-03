@@ -12,6 +12,7 @@ const { items } = Astro.props;
       <li>
         <div class="menu__row">
           <h3>{t.name}</h3>
+          <span class="menu__leader" aria-hidden="true" />
           <span class="menu__price">{euro(t.price)}</span>
         </div>
         {t.description && <p>{t.description}</p>}
